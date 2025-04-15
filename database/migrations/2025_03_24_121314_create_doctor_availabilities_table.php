@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('doctor_availabilities', function (Blueprint $table) {
             $table->id('AvailabilityId'); 
             $table->foreignId('DoctorId')->constrained('add_doctors', 'DoctorId')->onDelete('cascade'); 
-            $table->string('day');
+            $table->enum('day', ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']);
             $table->time('morning_from');
             $table->time('morning_to');
             $table->time('afternoon_from');

@@ -3,41 +3,42 @@
 @section('title', 'Doctor List')
 @section('content')
 
-<div class="main p-3">
-    <span>Doctor List</span>
-    <div class="border border-secondary"></div>
+<div class="main">
+    <h1 class="text-primary">Doctor List</h1>
+    <div class="border"></div>
         <div class="row mt-4">
             <div class="col-md-8">
                 <div class="row mt-2 justify-content-between">
                     <div class="col-md-4">
                         <div class="input-group">
-                            <input type="text" class="form-control rounded-pill border-secondary" placeholder="Search Doctors">
-                            <button class="btn btn-primary rounded-pill px-3">
-                                <i class="ri-search-line"></i>
-                            </button>
+                            <input type="text" name="search" class="form-control w-25 me-2" placeholder="Search patients..." value="{{ request('search') }}">
+                            <button type="submit" class="btn btn-primary btn-sm">Search</button>
                         </div>
                     </div>
                     <div class="col-md-4 d-flex justify-content-end">
-                        <a href="{{route('AddDoctor')}}" class="btn btn-primary"><i class="ri-add-line"></i>Add Doctor</a>
+                        <a href="{{route('AddDoctor')}}" class="btn border fw-bold"><i class="ri-add-line border border-primary text-primary rounded-pill me-2"></i>Add Doctor</a>
                     </div>
                 </div>
                 <div class="row mt-4">
                     @foreach($Doctorlist as $Doctor)
                     <div class="col-md-4 mt-2">
-                        <div class="card p-2">
-                            <img src="{{ $Doctor->image_path ? asset('storage/' . $Doctor->image_path) : asset('default-image.png') }}" alt="Doctor Image" width="100" height="auto" class="mb-2">
-                            <span>Name: Dr. {{ $Doctor->firstname }} {{ $Doctor->lastname }}</span>
-                            <br>
-                            <p>Specialization: {{ $Doctor->specialization ?? 'N/A' }}</p>
+                        <div class="border p-2" style="border-radius: 10px; background-color: #f8f9fa;">
                             <div class="row align-content-end">
                                 <div class="col d-flex justify-content-end">
-                                    <a href="" class="btn btn-sm btn-secondary rounded-pill me-1 text-white">
-                                        <i class="ri-pencil-fill"></i>
-                                    </a>
                                     <a href="{{ route('Availability', ['DoctorId' => $Doctor->DoctorId]) }}" 
-                                       class="btn btn-sm btn-success rounded-pill me-1">
+                                       class="btn btn-sm border border-secondary rounded-pill me-1">
                                        <i class="ri-calendar-2-line"></i>
                                     </a>
+                                </div>
+                            </div>
+                            <div class="row mt-2 mb-2">
+                                <div class="col d-flex justify-content-center">
+                                    <img src="{{ $Doctor->image_path ? asset('storage/' . $Doctor->image_path) : asset('default-image.png') }}" alt="Doctor Image" width="100" height="auto" class="mb-2">
+                                </div>
+                            </div>
+                            <div class="row mt-2 p-2">
+                                <div class="col d-flex justify-content-center">
+                                    <h1 class=" fw-bold d-inline">Dr.</h1><span class="text-dark ms-2 mt-1">{{ $Doctor->firstname }} {{ $Doctor->lastname }}</span>
                                 </div>
                             </div>
                         </div>

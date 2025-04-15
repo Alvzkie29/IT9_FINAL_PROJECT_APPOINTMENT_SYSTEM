@@ -9,6 +9,9 @@ class DoctorAvailability extends Model
 {
     use HasFactory;
 
+    protected  $primaryKey = "AvailabilityId";
+    public $incrementing = true;
+    protected $keyType = 'int'; 
     protected $fillable = [
         'DoctorId',
         'day',
@@ -20,7 +23,7 @@ class DoctorAvailability extends Model
 
     public function doctor()
     {
-        return $this->belongsTo(AddDoctor::class, 'DoctorId', 'DoctorId'); 
+        return $this->belongsTo(AddDoctor::class, 'DoctorId', 'DoctorId');
 }
 
 }

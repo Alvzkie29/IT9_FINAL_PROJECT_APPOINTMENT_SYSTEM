@@ -218,7 +218,7 @@
                     <ul id="appointment" class="sidebar-dropdown list-unstyled collapse"
                         data-bs-parent="#sidebar">
                         <li class="sidebar-item">
-                            <a href="{{ route('appointmentlist') }}"
+                            <a href="{{ route('appointment.appointment_list') }}"
                                class="sidebar-link"
                                hx-boost="true"
                                hx-push-url="true">
@@ -287,13 +287,6 @@
                             hx-boost="true"
                             hx-push-url="true">
                             <i class="ri-account-circle-fill"></i>Patient List</a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="{{route('PatientRecord')}}"
-                            class="sidebar-link"
-                            hx-boost="true"
-                            hx-push-url="PatientRecord">
-                            <i class="ri-account-box-line"></i>Patient Record</a>
                         </li>
                     </ul>
                 </li>

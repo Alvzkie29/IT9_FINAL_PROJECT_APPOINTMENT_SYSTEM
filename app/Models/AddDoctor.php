@@ -9,8 +9,11 @@ class AddDoctor extends Model
 {
     use HasFactory;
 
+    protected $table = 'add_doctors';
+    protected $primaryKey = 'DoctorId';
+    public $incrementing = false;
     protected $fillable = [
-        'file_image',
+        'image_path',
         'bio',
         'firstname',
         'lastname',

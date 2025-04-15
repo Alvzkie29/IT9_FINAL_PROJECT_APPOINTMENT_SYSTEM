@@ -58,6 +58,16 @@
     </style>
 </head>
 <body>
+
+    @if ($errors->any())
+    <div style="color: red;">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
     <div class="register-container">
         <h2>Register</h2>
         <form method="POST" action="{{ route('register') }}">
@@ -73,6 +83,7 @@
 
             <label for="password_confirmation">Confirm Password:</label>
             <input type="password" id="password_confirmation" name="password_confirmation" required>
+            <input type="hidden" name="role" value="user">
 
             <button type="submit">Register</button>
         </form>

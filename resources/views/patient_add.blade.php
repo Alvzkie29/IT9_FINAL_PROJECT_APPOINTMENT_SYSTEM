@@ -2,13 +2,13 @@
 @section('title', 'Add Patient')
 @section('content')
 
-<div class="main p-3">
-    <h1>Add Patient</h1>
-    <div class="border border-dark"></div>
-
+<div class="main">
+    <h1 class="text-primary">Add Patient</h1>
+    <div class="border"></div>
     <div class="row mt-3">
+        <div class="col">
         <div class="card p-3">
-            <h3>Patients Details</h3>
+            <span class="text-primary">Patients Details:</span>
             <form action="{{ route('StoredPatient') }}" method="POST">
                 @csrf   
                 <div class="row mt-2">
@@ -60,5 +60,6 @@
             </form>
         </div>
     </div>            
+</div>
 </div>
 @endsection
