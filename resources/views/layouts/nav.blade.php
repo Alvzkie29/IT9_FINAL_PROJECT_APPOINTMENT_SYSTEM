@@ -26,6 +26,74 @@
             transform: scale(1.05);
             transition: 0.3s ease-in-out;   
         }
+        .stepper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .step {
+      text-align: center;
+      cursor: pointer;
+    }
+    .step-circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #dee2e6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      margin: auto;
+      transition: background-color 0.3s;
+    }
+    .step.active .step-circle {
+      background-color: #0d6efd;
+      color: white;
+    }
+    
+    .step-line {
+      height: 4px;
+      background-color: #dee2e6;
+      flex: 1;
+      margin: 0 10px;
+      transition: background-color 0.3s;
+    }
+    .step.done .step-line {
+      background-color: #0d6efd;
+    }
+    .form-step {
+      display: none;
+    }
+    .form-step.active {
+      display: block;
+    }
+    .form-step {
+      display: none;
+      animation: fadeIn 0.4s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card img {
+      object-fit: contain;
+      width: 100%;
+      max-height: 200px;
+    }
+
+    .btn-choice {
+      margin: 5px;
+      border-radius: 20px;
+      padding: 8px 16px;
+    }
+
+    .btn-choice:hover {
+      background-color: #0d6efd;
+      color: white;
+    }
              
     </style>
 </head>

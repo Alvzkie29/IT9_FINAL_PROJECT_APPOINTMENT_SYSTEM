@@ -57,6 +57,8 @@ class AddDoctorController extends Controller
         return view('doctor_list', compact('Doctorlist')); 
     }
 
+    
+
     public function edit($DoctorId)
     {
         
@@ -126,5 +128,12 @@ public function update(Request $request, $DoctorId)
         $doctor->delete();
 
         return redirect()->route('DoctorRecord')->with('success', 'Doctor and associated availability deleted successfully!');
+    }
+
+    public function booking()
+    {
+        $Doctorlist = AddDoctor::all(); 
+
+        return view('user.booking', compact('Doctorlist')); 
     }
 }

@@ -87,8 +87,8 @@
     </div> 
     <div class="row mt-3">
         <div class="col">
-                <div class="table-responsive">
-                    <table class="table align-middle mb-0 bg-white  table-striped mt-4">
+                <div class="table-responsive"> 
+                    <table class="table align-middle mb-0 bg-white table-striped mt-4">
                         <thead class="bg-light">
                             <tr>
                                 <th><i class="ri-collapse-vertical-line"></i>Day</th>
@@ -107,16 +107,16 @@
                                         <p class="fw-bold mb-1">{{ $availability->day }}</p>
                                     </td>
                                     <td>
-                                        <p class="fw-bold mb-1">{{ $availability->morning_from }}</p>
+                                        {{ $availability->morning_from ? \Carbon\Carbon::createFromFormat('H:i:s', $availability->morning_from)->format('h:i A') : 'N/A' }}
                                     </td>
                                     <td>
-                                        <p class="fw-bold mb-1">{{ $availability->morning_to }}</p>
+                                        {{ $availability->morning_to ? \Carbon\Carbon::createFromFormat('H:i:s', $availability->morning_to)->format('h:i A') : 'N/A' }}
                                     </td>
                                     <td>
-                                        <p class="fw-bold mb-1">{{ $availability->afternoon_from }}</p>
+                                        {{ $availability->afternoon_from ? \Carbon\Carbon::createFromFormat('H:i:s', $availability->afternoon_from)->format('h:i A') : 'N/A' }}
                                     </td>
                                     <td>
-                                        <p class="fw-bold mb-1">{{ $availability->afternoon_to }}</p>
+                                        {{ $availability->afternoon_to ? \Carbon\Carbon::createFromFormat('H:i:s', $availability->afternoon_to)->format('h:i A') : 'N/A' }}
                                     </td>
                                     <td>
                                         <span class="badge bg-success rounded-pill d-inline">Available</span>

@@ -33,7 +33,7 @@
                             </div>
                             <div class="row mt-2 mb-2">
                                 <div class="col d-flex justify-content-center">
-                                    <img src="{{ $Doctor->image_path ? asset('storage/' . $Doctor->image_path) : asset('default-image.png') }}" alt="Doctor Image" width="100" height="auto" class="mb-2">
+                                    <img src="{{ $Doctor->image_path ? asset('storage/' . $Doctor->image_path) : asset('default-image.png') }}" alt="Doctor Image" width="200" height="200" class="mb-2">
                                 </div>
                             </div>
                             <div class="row mt-2 p-2">

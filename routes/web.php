@@ -1,15 +1,15 @@
-
 <?php
 
 use App\Models\AddDoctor;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AddDoctorController;
 use App\Http\Controllers\DoctorAvailabilityController;
 use App\Http\Controllers\AuthenticatedSessionController;
-use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return redirect()->route('login'); // Redirect to login page by default
@@ -109,14 +109,13 @@ Route::middleware(['auth', 'role:user'])->group(function () {
         return view('user.history'); 
     })->name('user.history');
 
-    Route::get('/Booking',function () {
-        return view('user.booking'); 
-    })->name('user.booking');
+    Route::get('/Booking', [AddDoctorController::class, 'booking'])->name('user.booking'); 
 
     Route::get('/MedicalForm', function () {
         return view('transaction.medical_form'); 
     })->name('MedicalForm');
 
+    Route::post('/booking/store', [BookingController::class, 'store'])->name('booking.store');
 });
 
 

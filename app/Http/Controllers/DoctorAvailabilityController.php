@@ -82,4 +82,5 @@ class DoctorAvailabilityController extends Controller
     
         return redirect()->route('Availability', $doctorId)->with('success', 'Availability deleted successfully.');
     }
+
 }
