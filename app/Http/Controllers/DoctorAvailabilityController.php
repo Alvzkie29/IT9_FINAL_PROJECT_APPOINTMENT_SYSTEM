@@ -20,11 +20,9 @@ class DoctorAvailabilityController extends Controller
     {
         $validated = $request->validate([
             'DoctorId' => 'required|exists:add_doctors,DoctorId',
-            'day' => 'required|in:monday,tuesday,wednesday,thursday,friday,saturday,sunday',
-            'morning_from' => 'nullable|date_format:H:i',
-            'morning_to' => 'nullable|date_format:H:i',
-            'afternoon_from' => 'nullable|date_format:H:i',
-            'afternoon_to' => 'nullable|date_format:H:i',
+            'day' => 'required|in:Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday',
+            'start_time' => 'required',
+            'end_time'   => 'required|after:start_time',
       
         ]);
         $exists = DoctorAvailability::where('DoctorId', $validated['DoctorId'])
@@ -38,10 +36,8 @@ class DoctorAvailabilityController extends Controller
         DoctorAvailability::create([
             'DoctorId' => $validated['DoctorId'],
             'day' => $validated['day'],
-            'morning_from' => $validated['morning_from'],
-            'morning_to' => $validated['morning_to'],
-            'afternoon_from' => $validated['afternoon_from'],
-            'afternoon_to' => $validated['afternoon_to'],
+            'start_time' => $validated['start_time'],
+            'end_time' => $validated['end_time'],
         ]);
 
         return redirect()->route('Availability', $validated['DoctorId'])->with('success', 'Availability added successfully.');
@@ -57,18 +53,14 @@ class DoctorAvailabilityController extends Controller
     {
         $request->validate([
             'availability_id' => 'required|exists:doctor_availabilities,AvailabilityId',
-            'morning_from' => 'required',
-            'morning_to' => 'required',
-            'afternoon_from' => 'required',
-            'afternoon_to' => 'required',
+            'start_time' => 'required',
+            'end_time' => 'required|after:start_time',
         ]);
 
         $availability = DoctorAvailability::findOrFail($request->availability_id);
 
-        $availability->morning_from = $request->morning_from;
-        $availability->morning_to = $request->morning_to;
-        $availability->afternoon_from = $request->afternoon_from;
-        $availability->afternoon_to = $request->afternoon_to;
+        $availability->start_time = $request->start_time;
+        $availability->end_time = $request->end_time;
         $availability->save();
 
         return redirect()->back()->with('success', 'Availability updated successfully.');

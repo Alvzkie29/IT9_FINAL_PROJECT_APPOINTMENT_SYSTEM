@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('add_doctors', function (Blueprint $table) {
-            $table->Id('DoctorId');
+            $table->id('DoctorId');
             $table->string('image_path')->nullable();
             $table->text('bio')->nullable();
             $table->string('firstname');

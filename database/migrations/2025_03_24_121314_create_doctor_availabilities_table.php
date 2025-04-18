@@ -17,10 +17,9 @@ return new class extends Migration
             $table->id('AvailabilityId'); 
             $table->foreignId('DoctorId')->constrained('add_doctors', 'DoctorId')->onDelete('cascade'); 
             $table->enum('day', ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']);
-            $table->time('morning_from');
-            $table->time('morning_to');
-            $table->time('afternoon_from');
-            $table->time('afternoon_to');
+            $table->time('start_time');
+            $table->time('end_time');
+            $table->string('status')->default('active'); 
             $table->timestamps();
         });
     }

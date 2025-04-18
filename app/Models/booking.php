@@ -24,8 +24,5 @@ class booking extends Model
     {
         return $this->belongsTo(AddDoctor::class, 'doctor_id', 'DoctorId');
     }
-    public function doctorAvailability()
-    {
-        return $this->hasOne(DoctorAvailability::class, 'DoctorId', 'doctor_id');
-    }
+
 }

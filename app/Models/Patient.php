@@ -19,4 +19,9 @@ class Patient extends Model
         'email',
         'marital',
     ];
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class, 'patient_id', 'id');
+    }
+    
 }

@@ -56,8 +56,11 @@
         </div>
               <!-- Step 3 -->
         <div class="form-step" id="form-step-3">
-          <p>Please confirm your information and submit the form.</p>
-          <button type="submit" class="btn btn-success">Submit</button>
+          <div class="row mt-3">
+             <div class="col">
+              <h1>Choose day</h1>
+             </div>
+          </div>
         </div>
       </form>
       <div class="text-center mt-4">

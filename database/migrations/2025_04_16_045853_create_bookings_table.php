@@ -14,9 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('bookings', function (Blueprint $table) {
-            $table->id();
+            $table->id('BookingId');
             $table->foreignId('patient_id')->constrained('patients')->onDelete('cascade');
-            $table->foreignId('doctor_id')->constrained('add_doctors')->onDelete('cascade');
+            $table->foreignId('doctor_id')->constrained('add_doctors', 'DoctorId')->onDelete('cascade');
             $table->date('date');
             $table->time('time');
             $table->enum('status', ['pending', 'confirmed', 'cancelled'])->default('pending');

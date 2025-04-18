@@ -44,7 +44,7 @@
                             <div class="form-group">
                                 <label for="day">Select Day</label>
                                 <select name="day" id="day" class="w-full p-2 border rounded form-control">
-                                    @foreach(['monday','tuesday','wednesday','thursday','friday','saturday','sunday'] as $day)
+                                    @foreach(['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'] as $day)
                                         <option value="{{ $day }}">{{ ucfirst($day) }}</option>
                                     @endforeach
                                 </select>
@@ -52,26 +52,14 @@
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group">
-                                    <label for="morning_from">Morning From</label>
-                                    <input type="time" name="morning_from" id="morning_from" class="form-control" required>
+                                    <label for="start_time">Start Time</label>
+                                    <input type="time" name="start_time" id="start_time" class="form-control" required>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group">
-                                    <label for="morning_to">Morning To</label>
-                                    <input type="time" name="morning_to" id="morning_to" class="form-control" required>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label for="afternoon_from">Afternoon From</label>
-                                    <input type="time" name="afternoon_from" id="afternoon_from" class="form-control" required>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label for="afternoon_to">Afternoon To</label>
-                                    <input type="time" name="afternoon_to" id="afternoon_to" class="form-control" required>
+                                    <label for="end_time">End Time</label>
+                                    <input type="time" name="end_time" id="end_time" class="form-control" required>
                                 </div>
                             </div>
                         </div>
@@ -92,10 +80,8 @@
                         <thead class="bg-light">
                             <tr>
                                 <th><i class="ri-collapse-vertical-line"></i>Day</th>
-                                <th><i class="ri-collapse-vertical-line"></i>Morning From</th>
-                                <th><i class="ri-collapse-vertical-line"></i>Morning To</th>
-                                <th><i class="ri-collapse-vertical-line"></i>Afternoon From</th>
-                                <th><i class="ri-collapse-vertical-line"></i>Afternoon To</th>
+                                <th><i class="ri-collapse-vertical-line"></i>Start Time</th>
+                                <th><i class="ri-collapse-vertical-line"></i>End Time</th>
                                 <th><i class="ri-collapse-vertical-line"></i>Status</th>
                                 <th><i class="ri-collapse-vertical-line"></i>Actions</th>
                             </tr>
@@ -107,16 +93,10 @@
                                         <p class="fw-bold mb-1">{{ $availability->day }}</p>
                                     </td>
                                     <td>
-                                        {{ $availability->morning_from ? \Carbon\Carbon::createFromFormat('H:i:s', $availability->morning_from)->format('h:i A') : 'N/A' }}
+                                        {{ $availability->start_time ? \Carbon\Carbon::createFromFormat('H:i:s', $availability->start_time)->format('h:i A') : 'N/A' }}
                                     </td>
                                     <td>
-                                        {{ $availability->morning_to ? \Carbon\Carbon::createFromFormat('H:i:s', $availability->morning_to)->format('h:i A') : 'N/A' }}
-                                    </td>
-                                    <td>
-                                        {{ $availability->afternoon_from ? \Carbon\Carbon::createFromFormat('H:i:s', $availability->afternoon_from)->format('h:i A') : 'N/A' }}
-                                    </td>
-                                    <td>
-                                        {{ $availability->afternoon_to ? \Carbon\Carbon::createFromFormat('H:i:s', $availability->afternoon_to)->format('h:i A') : 'N/A' }}
+                                        {{ $availability->end_time ? \Carbon\Carbon::createFromFormat('H:i:s', $availability->end_time)->format('h:i A') : 'N/A' }}
                                     </td>
                                     <td>
                                         <span class="badge bg-success rounded-pill d-inline">Available</span>
@@ -125,10 +105,8 @@
                                         <button 
                                             class="btn btn-secondary btn-sm rounded-fill editBtn" style="background-color: white; color: black; border-color: green;"
                                             data-id="{{ $availability->AvailabilityId }}"
-                                            data-morning_from="{{ $availability->morning_from }}"
-                                            data-morning_to="{{ $availability->morning_to }}"
-                                            data-afternoon_from="{{ $availability->afternoon_from }}"
-                                            data-afternoon_to="{{ $availability->afternoon_to }}"
+                                            data-start_time="{{ $availability->start_time }}"
+                                            data-end_time="{{ $availability->end_time }}"
                                             data-bs-toggle="modal" 
                                             data-bs-target="#staticBackdrop">
                                             <i class="fa-solid fa-pen-to-square"></i>
@@ -167,23 +145,12 @@
                 <div class="modal-body">
                     <div class="row mt-3">
                         <div class="col-md-6">
-                            <label for="edit_morning_from">Morning From</label>
-                            <input type="time" id="edit_morning_from" name="morning_from" class="form-control" required>
+                            <label for="edit_start_time">Start Time</label>
+                            <input type="time" id="edit_start_time" name="start_time" class="form-control" required>
                         </div>
                         <div class="col-md-6">
-                            <label for="edit_morning_to">Morning To</label>
-                            <input type="time" id="edit_morning_to" name="morning_to" class="form-control" required>
-                        </div>
-                    </div>
-
-                    <div class="row mt-3">
-                        <div class="col-md-6">
-                            <label for="edit_afternoon_from">Afternoon From</label>
-                            <input type="time" id="edit_afternoon_from" name="afternoon_from" class="form-control" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="edit_afternoon_to">Afternoon To</label>
-                            <input type="time" id="edit_afternoon_to" name="afternoon_to" class="form-control" required>
+                            <label for="edit_end_time">End Time</label>
+                            <input type="time" id="edit_end_time" name="end_time" class="form-control" required>
                         </div>
                     </div>
                 </div>
@@ -204,16 +171,12 @@
         editButtons.forEach(button => {
             button.addEventListener('click', function () {
                 const availabilityId = this.getAttribute('data-id');
-                const morningFrom = this.getAttribute('data-morning_from');
-                const morningTo = this.getAttribute('data-morning_to');
-                const afternoonFrom = this.getAttribute('data-afternoon_from');
-                const afternoonTo = this.getAttribute('data-afternoon_to');
+                const startTime = this.getAttribute('data-start_time');
+                const endTime = this.getAttribute('data-end_time');
 
                 document.getElementById('edit_availability_id').value = availabilityId;
-                document.getElementById('edit_morning_from').value = morningFrom;
-                document.getElementById('edit_morning_to').value = morningTo;
-                document.getElementById('edit_afternoon_from').value = afternoonFrom;
-                document.getElementById('edit_afternoon_to').value = afternoonTo;
+                document.getElementById('edit_start_time').value = startTime;
+                document.getElementById('edit_end_time').value = endTime;
             });
         });
     });

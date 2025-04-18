@@ -15,10 +15,8 @@ class DoctorAvailability extends Model
     protected $fillable = [
         'DoctorId',
         'day',
-        'morning_from',
-        'morning_to',
-        'afternoon_from',
-        'afternoon_to',
+        'start_time',
+        'end_time',
     ];
 
     public function doctor()
