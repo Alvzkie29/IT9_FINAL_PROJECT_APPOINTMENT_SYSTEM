@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Patient;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class PatientController extends Controller
@@ -28,22 +29,37 @@ class PatientController extends Controller
     return view('patient_list', compact('patients'));
 }
 
-    public function store(Request $request)
+public function store(Request $request)
 {
-
+    // Assign the user_id to the validated data before validation
+    $user_id = Auth::id();
+    
+    // Validate the incoming data
     $validated = $request->validate([
         'firstname' => 'required|string|max:255',
         'lastname' => 'required|string|max:255',
         'age' => 'required|integer',
         'gender' => 'required|string',
         'contact' => 'required|string|max:20',
-        'email' => 'required|email|unique:patients',
+        'email' => 'required|email|unique:patients',  // No need for user_id validation
         'marital' => 'required|string',
     ]);
 
+    // Add the logged-in user's ID to the validated data
+    $validated['user_id'] = $user_id;
+
+    // Create the patient record with the validated data
     Patient::create($validated);
 
-    return redirect()->route('PatientList')->with('success', 'Patient added successfully!');
+    // Get the current user
+    $user = Auth::user();
+
+    // Redirect based on the user's role
+    if ($user->role === 'admin') {
+        return redirect()->route('PatientList')->with('success', 'Patient added successfully!');
+    } else {
+        return redirect()->route('AccountDetails')->with('success', 'Your patient profile has been saved!');
+    }
 }
 
     public function show($id){

@@ -80,7 +80,6 @@ Route::middleware(['auth' , 'role:admin'])->group(function () {
     })->name('AddPatient');
 
     //Adding Patients
-    Route::post('/AddPatient',[PatientController::class, 'store'])->name('StoredPatient');
     Route::get('/patients', [PatientController::class, 'index'])->name('PatientList');
     Route::get('/patients/search', [PatientController::class, 'search'])->name('patients.search');
         
@@ -99,6 +98,7 @@ Route::middleware(['auth' , 'role:admin'])->group(function () {
     Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 });
 
+Route::post('/AddPatient',[PatientController::class, 'store'])->name('StoredPatient');
 
 Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/user/dashboard', function () {
@@ -116,6 +116,10 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     })->name('MedicalForm');
 
     Route::post('/booking/store', [BookingController::class, 'store'])->name('booking.store');
+    
+    Route::get('MyAccount', function () {
+        return view('user.account'); 
+    })->name('AccountDetails');
 });
 
 

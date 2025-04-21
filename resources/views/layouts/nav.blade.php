@@ -123,6 +123,7 @@
                             <i class="ri-user-line"></i> Profile
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+                            <li><a class="dropdown-item"href="{{ route("AccountDetails") }}">My Account</a></li>
                             <li>
                                 <form action="{{ route('logout') }}" method="POST" class="dropdown-item p-0">
                                     @csrf
