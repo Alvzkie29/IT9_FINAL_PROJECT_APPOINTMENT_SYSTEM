@@ -132,8 +132,8 @@ public function update(Request $request, $DoctorId)
 
     public function booking()
     {
-        $Doctorlist = AddDoctor::all(); 
+        $doctors = AddDoctor::all();  
 
-        return view('user.booking', compact('Doctorlist')); 
+        return view('user.booking', compact('doctors'));  
     }
 }

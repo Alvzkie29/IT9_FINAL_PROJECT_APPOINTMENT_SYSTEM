@@ -218,10 +218,7 @@
                     <ul id="appointment" class="sidebar-dropdown list-unstyled collapse"
                         data-bs-parent="#sidebar">
                         <li class="sidebar-item">
-                            <a href="{{ route('appointmentlist') }}"
-                               class="sidebar-link"
-                               hx-boost="true"
-                               hx-push-url="true">
+                            <a href="{{ route('appointmentlist') }}" class="sidebar-link">
                                 <i class="ri-notification-2-fill"></i> Appointment List
                             </a>
                         </li>

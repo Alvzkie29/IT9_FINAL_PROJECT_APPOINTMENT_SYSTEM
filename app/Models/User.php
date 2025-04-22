@@ -51,4 +51,8 @@ class User extends Authenticatable
             }
         });
     }
+        public function patient()
+    {
+        return $this->hasOne(Patient::class, 'user_id');
+    }
 }

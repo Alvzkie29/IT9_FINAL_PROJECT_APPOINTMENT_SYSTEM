@@ -39,9 +39,8 @@ Route::middleware(['auth' , 'role:admin'])->group(function () {
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     });
 
-    Route::get('/appointmentlist', function () {
-        return view('appointment_list');
-    })->name('appointmentlist');
+    Route::get('/appointmentlist', [BookingController::class, 'index'])->name('appointmentlist');
+    Route::post('/appointmentlist/{id}/confirm', [BookingController::class, 'confirm'])->name('appointmentlist.confirm');
 
     Route::get('/appointmentrecord', function () {
         return view('appointment_record');
@@ -109,13 +108,15 @@ Route::middleware(['auth', 'role:user'])->group(function () {
         return view('user.history'); 
     })->name('user.history');
 
-    Route::get('/Booking', [AddDoctorController::class, 'booking'])->name('user.booking'); 
+    Route::get('/booking', [AddDoctorController::class, 'booking'])->name('user.booking'); 
+    Route::get('/booking/create', [BookingController::class, 'create'])->name('bookings.create');
+    Route::post('/booking', [BookingController::class, 'store'])->name('bookings.store');
+    Route::get('/booking/available-slots', [BookingController::class, 'getAvailableTimeSlots'])->name('booking.available-slots');
 
     Route::get('/MedicalForm', function () {
         return view('transaction.medical_form'); 
     })->name('MedicalForm');
 
-    Route::post('/booking/store', [BookingController::class, 'store'])->name('booking.store');
     
     Route::get('MyAccount', function () {
         return view('user.account'); 

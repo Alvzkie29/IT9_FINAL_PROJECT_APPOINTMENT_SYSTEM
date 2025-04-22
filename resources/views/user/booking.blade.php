@@ -2,113 +2,70 @@
 
 @section('title', 'Book Appointment')
 @section('content')
-
 <div class="container mt-5">
-    <div class="bg-white shadow rounded p-4">
-      <div class="stepper mb-4">
-        <div class="step" >
-          <div class="step-circle">1</div>
-          <div>Personal Info</div>
+    <h2>Book an Appointment</h2>
+    @if(session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
+
+    <form action="{{ route('bookings.store') }}" method="POST">
+        @csrf
+
+        <div class="mb-3">
+            <label for="doctor_id" class="form-label">Select Doctor</label>
+            <select name="doctor_id" id="doctor_id" class="form-select" required>
+                <option value="">Choose...</option>
+                @foreach ($doctors as $doctor)
+                    <option value="{{ $doctor->DoctorId }}">{{ $doctor->firstname }} {{ $doctor->lastname }} - {{ $doctor->specialization }}</option>
+                @endforeach
+            </select>
         </div>
-        <div class="step-line" id="line-1"></div>
-        <div class="step">
-          <div class="step-circle">2</div>
-          <div>Doctor</div>
+
+        <div class="mb-3">
+            <label for="date" class="form-label">Select Date</label>
+            <input type="date" name="date" id="date" class="form-control" min="{{ date('Y-m-d') }}" required>
         </div>
-        <div class="step-line" id="line-2"></div>
-        <div class="step" >
-          <div class="step-circle">3</div>
-          <div>Confirmation</div>
+
+        <div class="mb-3">
+            <label for="time" class="form-label">Available Time Slots</label>
+            <select name="time" id="time" class="form-select" required>
+                <option value="">Select a time</option>
+            </select>
         </div>
-      </div>
-      <form id="stepForm">
-        <div class="form-step active" id="form-step-1">
-          <div class="row">
-              <div class="col-md-4">
-                  <label for="firstName" class="form-label">First Name</label>
-                  <input type="text" id="firstName" class="form-control" required>
-              </div>
-              <div class="col-md-4">
-                  <label for="lastName" class="form-label">Last Name</label>
-                  <input type="text" id="lastName" class="form-control" required>
-              </div>
-          </div>
-      </div>
-      
-        <!-- Step 2 -->
-        
-        <div class="form-step" id="form-step-2">
-          <div class="row">
-            @foreach($Doctorlist as $doctor)
-            <div class="col-md-4 mb-3">
-              <div class="card text-center shadow-sm p-3">
-                <img src="{{ asset('storage/' . $doctor->image_path) }}" alt="Doctor Image" class="img-fluid" style="max-height: 150px;">
-                <h5 class="mt-3">DR. {{ $doctor->firstname }} {{ $doctor->lastname }}</h5>
-                <div class="mt-3">
-                  <button type="button" class="btn btn-outline-primary btn-choice">Morning</button>
-                  <button type="button" class="btn btn-outline-primary btn-choice">Afternoon</button>
-                </div>
-              </div>
-            </div>
-            @endforeach
-            
-          </div>
+
+        <div class="mb-3">
+            <label for="concern" class="form-label">Your Concern</label>
+            <textarea name="concern" id="concern" class="form-control" rows="3" required></textarea>
         </div>
-              <!-- Step 3 -->
-        <div class="form-step" id="form-step-3">
-          <div class="row mt-3">
-             <div class="col">
-              <h1>Choose day</h1>
-             </div>
-          </div>
-        </div>
-      </form>
-      <div class="text-center mt-4">
-          <button class="btn btn-secondary me-2" onclick="prevStep()">Back</button>
-          <button class="btn btn-primary" onclick="nextStep()">Next</button>
-      </div>
-    </div>
-  </div>
 
-  <script>
-    let currentStep = 1;
+        <button type="submit" class="btn btn-primary">Book Now</button>
+    </form>
+</div>
 
-    function updateSteps(step) {
-    const steps = document.querySelectorAll('.step');
-    const lines = document.querySelectorAll('.step-line');
-    const forms = document.querySelectorAll('.form-step');
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const doctorSelect = document.getElementById('doctor_id');
+    const dateInput = document.getElementById('date');
+    const timeSelect = document.getElementById('time');
 
-    steps.forEach((s, index) => {
-        s.classList.toggle('active', index < step);
-    });
+    function loadAvailableSlots() {
+        const doctorId = doctorSelect.value;
+        const date = dateInput.value;
 
-    lines.forEach((line, index) => {
-        line.classList.toggle('done', index < step - 1);
-    });
-
-    forms.forEach((form, index) => {
-        form.classList.toggle('active', index + 1 === step);
-    });
-
-    currentStep = step;
+        if (doctorId && date) {
+            fetch(`/booking/available-slots?doctor_id=${doctorId}&date=${date}`)
+                .then(response => response.json())
+                .then(data => {
+                    timeSelect.innerHTML = '<option value="">Select a time</option>';
+                    data.forEach(time => {
+                        timeSelect.innerHTML += `<option value="${time}">${time}</option>`;
+                    });
+                });
+        }
     }
 
-    function nextStep() {
-    if (currentStep < 3) {
-        updateSteps(currentStep + 1);
-    }
-    }
-
-    function prevStep() {
-    if (currentStep > 1) {
-        updateSteps(currentStep - 1);
-    }
-    }
-
-    function goToStep(step) {
-    updateSteps(step);
-    }
-
-    updateSteps(currentStep);
-  </script>
+    doctorSelect.addEventListener('change', loadAvailableSlots);
+    dateInput.addEventListener('change', loadAvailableSlots);
+});
+</script>
 @endsection
