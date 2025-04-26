@@ -224,9 +224,7 @@
                         </li>
                         <li class="sidebar-item">
                             <a href="{{route('appointmentrecord')}}" 
-                            class="sidebar-link"
-                            hx-boost="true"
-                            hx-push-url="true">
+                            class="sidebar-link">
                                 <i class="ri-folder-history-fill"></i> Appointment Record
                             </a>
                         </li>

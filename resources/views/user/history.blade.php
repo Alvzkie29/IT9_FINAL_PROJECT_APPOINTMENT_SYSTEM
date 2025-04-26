@@ -1,4 +1,4 @@
-@extends('layouts.nav') {{-- Assuming your main layout is in layouts/app.blade.php --}}
+@extends('layouts.nav')
 
 @section('title', 'Appointment History')
 
@@ -47,17 +47,30 @@
                                             <th><i class="ri-time-line"></i> Appointment Time</th>
                                             <th><i class="ri-stethoscope-line"></i> Doctor</th>
                                             <th><i class="ri-checkbox-circle-line"></i> Status</th>
+                                            <th><i class="ri-tools-line"></i> Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                            
+                                        @foreach($bookings as $booking)
+                                            <tr>
+                                                <td>{{ $booking->patient->user->name ?? 'N/A' }}</td>
+                                                <td>{{ $booking->date }}</td>
+                                                <td>{{ $booking->time }}</td>
+                                                <td>{{ $booking->doctor->firstname }} {{ $booking->doctor->lastname }}</td>
+                                                <td>{{ ucfirst($booking->status) }}</td>
+                                                <td>
+                                                    @if($booking->status == 'pending')
+                                                        <form action="{{ route('booking.cancel', ['id' => $booking->BookingId]) }}" method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button class="btn btn-sm btn-danger">Cancel</button>
+                                                        </form>
+                                                    @else
+                                                        <span class="text-muted"></span>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

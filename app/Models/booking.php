@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class booking extends Model
+class Booking extends Model
 {
     use HasFactory;
 
@@ -16,6 +16,7 @@ class booking extends Model
         'doctor_id',
         'date',
         'time',
+        'concern',
         'status',
     ];
     public function patient()

@@ -42,9 +42,7 @@ Route::middleware(['auth' , 'role:admin'])->group(function () {
     Route::get('/appointmentlist', [BookingController::class, 'index'])->name('appointmentlist');
     Route::post('/appointmentlist/{id}/confirm', [BookingController::class, 'confirm'])->name('appointmentlist.confirm');
 
-    Route::get('/appointmentrecord', function () {
-        return view('appointment_record');
-    })->name('appointmentrecord');
+    Route::get('/appointmentrecords', [BookingController::class, 'records'])->name('appointmentrecord');
 
     // for doctors
     Route::get('/AddDoctor', function () {
@@ -101,12 +99,12 @@ Route::post('/AddPatient',[PatientController::class, 'store'])->name('StoredPati
 
 Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/user/dashboard', function () {
-        return view('user.dashboard'); // Create this blade file
+        return view('user.dashboard'); 
     })->name('user.dashboard');
 
-    Route::get('/History',function () {
-        return view('user.history'); 
-    })->name('user.history');
+    Route::get('/History', [BookingController::class, 'history'])->name('user.history');
+    Route::delete('/booking/cancel/{id}', [BookingController::class, 'cancel'])->name('booking.cancel');
+
 
     Route::get('/booking', [AddDoctorController::class, 'booking'])->name('user.booking'); 
     Route::get('/booking/create', [BookingController::class, 'create'])->name('bookings.create');
