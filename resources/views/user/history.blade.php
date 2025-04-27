@@ -4,81 +4,66 @@
 
 @section('content')
 
-
 <div class="main">
-   <div class="border shadow-sm p-3 mb-5 bg-body rounded ">
-        <div class="row mt-5">
-            <div class="col-md-3">
-                <div class="row mt-3">
-                    <div class="col">
-                        <h3 class="text-center"><b>My Accounts</b></h3>
-                        <div class="border shadow-sm p-4 mb-5 bg-light rounded-4">
-                            <div class="row text-center g-3 justify-content-center">
-                                <div class="col-md-12">
-                                    <a href="#" class="btn btn-outline-secondary btn-lg w-100 shadow-sm rounded-3 text-black">
-                                        <i class="bi bi-calendar-check-fill me-2"></i> Sessions
-                                    </a>
-                                </div>
-                                <div class="col-md-12">
-                                    <a href="#" class="btn btn-outline-secondary btn-lg w-100 shadow-sm rounded-3 text-black">
-                                        <i class="bi bi-clipboard-heart-fill me-2"></i> Medical History
-                                    </a>
-                                </div>
-                                <div class="col-md-12">
-                                    <a href="#" class="btn btn-outline-secondary btn-lg w-100 shadow-sm rounded-3 text-black">
-                                        <i class="bi bi-cash-coin me-2"></i> Express Billing
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+    <div class="hero-section text-center">
+        <h1 class="display-4">Your Appointment History</h1>
+        <p class="lead">View all your past and upcoming appointments.</p>
+    </div>
+    <div class="border p-3 mb-4">
+        <h2 class="text-primary">Upcoming Appointments</h2>
+        <p class="text-muted">Here are your upcoming appointments.</p>
+            @foreach($bookings as $booking)
+            <div class="border rounded-4 p-3 px-4 mb-3 bg-light-subtle">
+                <div class="d-flex flex-wrap align-items-center justify-content-between text-dark fw-semibold" style="font-size: 1rem;">
+                    <div class="me-4 mb-2">
+                        <i class="ri-user-line text-primary"></i>
+                        {{ $booking->patient->firstname ?? 'N/A' }}
                     </div>
+
+                    <div class="me-4 mb-2">
+                        <i class="ri-calendar-event-line text-secondary"></i> 
+                        {{ \Carbon\Carbon::parse($booking->date)->format('M d, Y') }}
+                    </div>
+
+                    <div class="me-4 mb-2">
+                        <i class="ri-time-line text-success"></i> 
+                        {{ \Carbon\Carbon::parse($booking->time)->format('h:i A') }}
+                    </div>
+
+                    <div class="me-4 mb-2">
+                        <i class="ri-stethoscope-line text-info"></i> 
+                        {{ $booking->doctor->firstname }} {{ $booking->doctor->lastname }}
+                    </div>
+
+                    <div class="me-4 mb-2">
+                        <i class="ri-phone-line text-warning"></i> 
+                        {{ $booking->patient->contact ?? 'N/A' }}
+                    </div>
+
+                    <div class="me-4 mb-2">
+                        <i class="ri-checkbox-circle-line 
+                            {{ $booking->status == 'pending' ? 'text-warning' : ($booking->status == 'cancelled' ? 'text-danger' : 'text-success') }}">
+                        </i> 
+                        <span class="badge 
+                            {{ $booking->status == 'pending' ? 'bg-warning text-dark' : ($booking->status == 'cancelled' ? 'bg-danger' : 'bg-success') }} 
+                            rounded-pill px-3 py-2">
+                            {{ ucfirst($booking->status) }}
+                        </span>
+                    </div>
+
+                    @if($booking->status == 'pending')
+                        <form action="{{ route('booking.cancel', ['id' => $booking->BookingId]) }}" method="POST" class="d-inline">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-outline-danger btn-sm rounded-pill ms-2">
+                                Cancel
+                            </button>
+                        </form>
+                    @endif
                 </div>
             </div>
-            <div class="col-md-9">
-                <div class="border shadow-sm p-3 mb-5 bg-body rounded">
-                    <div class="row">
-                        <div class="col">
-                            <div class="table-responsive">
-                                <table class="table align-middle mb-0 bg-white table-striped">
-                                    <thead class="bg-light">
-                                        <tr>
-                                            <th><i class="ri-user-line"></i> Name</th>
-                                            <th><i class="ri-calendar-event-line"></i> Appointment Date</th>
-                                            <th><i class="ri-time-line"></i> Appointment Time</th>
-                                            <th><i class="ri-stethoscope-line"></i> Doctor</th>
-                                            <th><i class="ri-checkbox-circle-line"></i> Status</th>
-                                            <th><i class="ri-tools-line"></i> Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach($bookings as $booking)
-                                            <tr>
-                                                <td>{{ $booking->patient->user->name ?? 'N/A' }}</td>
-                                                <td>{{ $booking->date }}</td>
-                                                <td>{{ $booking->time }}</td>
-                                                <td>{{ $booking->doctor->firstname }} {{ $booking->doctor->lastname }}</td>
-                                                <td>{{ ucfirst($booking->status) }}</td>
-                                                <td>
-                                                    @if($booking->status == 'pending')
-                                                        <form action="{{ route('booking.cancel', ['id' => $booking->BookingId]) }}" method="POST">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button class="btn btn-sm btn-danger">Cancel</button>
-                                                        </form>
-                                                    @else
-                                                        <span class="text-muted"></span>
-                                                    @endif
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-   </div>
+        @endforeach
+    </div>
 </div>
+
 @endsection

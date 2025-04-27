@@ -63,6 +63,7 @@ Route::middleware(['auth' , 'role:admin'])->group(function () {
     Route::get('/doctor-availability/{DoctorId}', [DoctorAvailabilityController::class, 'create'])->name('Availability');
     Route::delete('/doctor-availability/{AvailabilityId}', [DoctorAvailabilityController::class, 'destroy'])->name('DeleteDoctorAvailability');
     Route::put('/doctor-availability/update', [DoctorAvailabilityController::class, 'update'])->name('UpdateDoctorAvailability');
+    Route::patch('/doctor-availability/toggle/{AvailabilityId}', [DoctorAvailabilityController::class, 'toggleStatus'])->name('ToggleDoctorAvailability');
     
 
     // for patient
@@ -79,6 +80,8 @@ Route::middleware(['auth' , 'role:admin'])->group(function () {
     //Adding Patients
     Route::get('/patients', [PatientController::class, 'index'])->name('PatientList');
     Route::get('/patients/search', [PatientController::class, 'search'])->name('patients.search');
+
+  
         
     //Patient Edit Update Delete and Show
     Route::get('/patients/{id}/edit', [PatientController::class, 'edit'])->name('patient.edit');
@@ -119,6 +122,8 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('MyAccount', function () {
         return view('user.account'); 
     })->name('AccountDetails');
+
+    Route::get('PatientInfo', [PatientController::class, 'fetchPatientInfo'])->name('PatientInfo'); 
 });
 
 

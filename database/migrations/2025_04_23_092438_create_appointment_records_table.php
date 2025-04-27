@@ -18,7 +18,6 @@ return new class extends Migration
             $table->unsignedBigInteger('booking_id');
             $table->string('status')->default('confirmed');
             $table->timestamps();
-        
             $table->foreign('booking_id')->references('BookingId')->on('bookings')->onDelete('cascade');
         });
     }

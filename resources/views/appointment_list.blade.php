@@ -13,8 +13,8 @@
                 <tr>
                     <td>{{ $booking->patient->user->name ?? 'N/A' }}</td>
                     <td>{{ $booking->doctor->firstname }} {{ $booking->doctor->lastname }}</td>
-                    <td>{{ $booking->date }}</td>
-                    <td>{{ $booking->time }}</td>
+                    <td>{{ \Carbon\Carbon::parse($booking->date)->format('M d, Y') }}</td>
+                    <td>{{ \Carbon\Carbon::parse($booking->time)->format('h:i A') }}</td>
                     <td>{{ $booking->concern }}</td>
                     <td>{{ ucfirst($booking->status) }}</td>
                     <td>
@@ -31,8 +31,8 @@
             @endforeach
         </tbody>
     </table>
-@else
-    <p>No appointment requests available.</p>
-@endif
+    @else
+        <p>No appointment requests available.</p>
+    @endif
 </div>
 @endsection

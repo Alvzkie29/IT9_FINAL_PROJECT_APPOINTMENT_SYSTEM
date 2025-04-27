@@ -10,57 +10,36 @@ class PatientController extends Controller
 {
     public function index()
     {
-        $patients = Patient::latest()->paginate(11);
-        return view('patient_list', compact('patients'));
+        $patients = Patient::paginate(2);
+        return view('patient_list', compact('patients')); 
     }
 
-    public function search(Request $request)
-{
-    $search = $request->input('search');
-
-    $patients = Patient::where('firstname', 'like', "%{$search}%")
-        ->orWhere('lastname', 'like', "%{$search}%")
-        ->orWhere('email', 'like', "%{$search}%")
-        ->orWhere('contact', 'like', "%{$search}%")
-        ->latest()
-        ->paginate(11)
-        ->appends(['search' => $search]);
-
-    return view('patient_list', compact('patients'));
-}
-
-public function store(Request $request)
-{
-    // Assign the user_id to the validated data before validation
-    $user_id = Auth::id();
+    public function store(Request $request)
+    {
+        $user_id = Auth::id();
     
-    // Validate the incoming data
-    $validated = $request->validate([
-        'firstname' => 'required|string|max:255',
-        'lastname' => 'required|string|max:255',
-        'age' => 'required|integer',
-        'gender' => 'required|string',
-        'contact' => 'required|string|max:20',
-        'email' => 'required|email|unique:patients',  // No need for user_id validation
-        'marital' => 'required|string',
-    ]);
-
-    // Add the logged-in user's ID to the validated data
-    $validated['user_id'] = $user_id;
-
-    // Create the patient record with the validated data
-    Patient::create($validated);
-
-    // Get the current user
-    $user = Auth::user();
-
-    // Redirect based on the user's role
-    if ($user->role === 'admin') {
-        return redirect()->route('PatientList')->with('success', 'Patient added successfully!');
-    } else {
-        return redirect()->route('AccountDetails')->with('success', 'Your patient profile has been saved!');
+        // Validate the incoming data
+        $validated = $request->validate([
+            'firstname' => 'required|string|max:255',
+            'lastname' => 'required|string|max:255',
+            'age' => 'required|integer',
+            'gender' => 'required|string',
+            'contact' => 'required|string|max:20',
+            'email' => 'required|email|unique:patients',  
+            'marital' => 'required|string',
+        ]);
+    
+        $validated['user_id'] = $user_id;
+        Patient::create($validated);
+    
+ 
+        $user = Auth::user();
+        if ($user->role === 'admin') {
+            return redirect()->route('PatientList')->with('success', 'Patient added successfully!');
+        } else {
+            return redirect()->route('AccountDetails')->with('success', 'Your patient profile has been saved!');
+        }
     }
-}
 
     public function show($id){
         $patient = Patient::findOrFail($id); 
@@ -101,7 +80,23 @@ public function store(Request $request)
 
         return redirect()->route('PatientList')->with('success', 'Patient deleted successfully!');
     }
-    
+    public function fetchPatientInfo()
+{
+    $user_id = Auth::id(); 
+    $patient = Patient::where('user_id', $user_id)->first(); 
 
+    return view('user.patient_info', compact('patient'));
+}
+public function search(Request $request)
+{
+    $query = $request->input('search');
+    $patients = Patient::where('firstname', 'like', "%$query%")
+        ->orWhere('lastname', 'like', "%$query%")
+        ->orWhere('email', 'like', "%$query%")
+        ->paginate(2) // Use pagination set to 2
+        ->appends(['search' => $query]); // Append the search query to pagination links
+
+    return view('patient_list', compact('patients'));
+}
 }
 

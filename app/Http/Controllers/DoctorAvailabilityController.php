@@ -75,4 +75,13 @@ class DoctorAvailabilityController extends Controller
         return redirect()->route('Availability', $doctorId)->with('success', 'Availability deleted successfully.');
     }
 
+    public function toggleStatus($AvailabilityId)
+    {
+        $availability = DoctorAvailability::findOrFail($AvailabilityId);
+        $availability->status = $availability->status === 1 ? 0 : 1; 
+        $availability->save();
+
+        return redirect()->back()->with('success', 'Availability status updated successfully.');
+    }
+
 }

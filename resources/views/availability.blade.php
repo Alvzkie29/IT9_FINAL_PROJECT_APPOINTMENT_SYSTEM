@@ -99,9 +99,18 @@
                                         {{ $availability->end_time ? \Carbon\Carbon::createFromFormat('H:i:s', $availability->end_time)->format('h:i A') : 'N/A' }}
                                     </td>
                                     <td>
-                                        <span class="badge bg-success rounded-pill d-inline">Available</span>
+                                        <span class="badge {{ $availability->status === 1 ? 'bg-success' : 'bg-danger' }} rounded-pill d-inline">
+                                            {{ $availability->status === 1 ? 'Available' : 'Not Available' }}
+                                        </span>
                                     </td>
                                     <td>
+                                        <form action="{{ route('ToggleDoctorAvailability', $availability->AvailabilityId) }}" method="POST" class="d-inline">
+                                            @csrf
+                                            @method('PATCH')
+                                            <button type="submit" class="btn btn-sm" style="background-color: bisque;">
+                                                <i class="ri-error-warning-line"></i>
+                                            </button>
+                                        </form>
                                         <button 
                                             class="btn btn-secondary btn-sm rounded-fill editBtn" style="background-color: white; color: black; border-color: green;"
                                             data-id="{{ $availability->AvailabilityId }}"
