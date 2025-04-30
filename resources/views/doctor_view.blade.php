@@ -10,7 +10,7 @@
         <h1 class="text-primary mb-0">Doctor Details</h1>
     </div>
     <div class="border mt-2"></div>
-        <div class="border shadow-sm p-3 mb-5 bg-body rounded mt-2">
+        <div class="border shadow-sm mb-5 rounded-4 p-4 bg-light mt-2">
             <div class="row mt-3 justify-content-center">
                 @if($doctor->image_path)
                     <img src="{{ asset('storage/' . $doctor->image_path) }}" alt="Doctor Image" class="img-fluid" style="width: 400px; height: 400px;">

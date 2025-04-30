@@ -1,86 +1,97 @@
 @extends('layouts.app')
 
 @section('title', 'Patient Records')
+
 @section('content')
+<div class="main p-2">
 
-<div class="main">
-    <div class="d-flex align-items-center mb-3">
-        <a href="{{ route('PatientList') }}" class="btn btn-sm btn-primary me-2">
-            <i class="fa-solid fa-backward-step fa-lg "></i>
-
+    <!-- Header and Back Button -->
+    <div class="d-flex align-items-center mb-4">
+        <a href="{{ route('PatientList') }}" class="btn btn-outline-primary me-3">
+            <i class="ri-arrow-go-back-fill"></i> &nbsp Back to List
         </a>
-        <h1 class="text-primary mb-0">Patient Records</h1>
+        <h2 class="mb-0 text-primary">Patient Records</h2>
     </div>
-    <div class="border"></div>
-        <div class="row mt-4">
-            <div class="col">
-                <div class="card p-4">
-                    <p><strong>Name:</strong> {{ $patient->firstname }} {{ $patient->lastname }}</p>
-                    <p><strong>Age:</strong> {{ $patient->age }}</p>
-                    <p><strong>Gender:</strong> {{ ucfirst($patient->gender) }}</p>
-                    <p><strong>Contact No.:</strong> {{ $patient->contact }}</p>
-                    <p><strong>Email:</strong> {{ $patient->email }}</p>
-                    <p><strong>Marital Status:</strong> {{ $patient->marital }}</p>
-                   
-                </div>
-            </div>
-        </div>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="row mt-3">
-                 <div class="col">
-                    <div class="card p-3">
-                        <span class="text-primary">Patient History</span>
-                        <div class="table mt-3">
-                            <table class="table table-striped table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Date</th>
-                                        <th>Medical History</th>
-                                        <th>Prescription</th>
 
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                 </div>
+    <!-- Patient Information -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header text-white fw-bold" style="background-color: #0e2238;">
+            Personal Information
+        </div>
+        <div class="card-body">
+            <div class="row mb-2">
+                <div class="col-md-4"><strong>Name:</strong> {{ $patient->firstname }} {{ $patient->lastname }}</div>
+                <div class="col-md-4"><strong>Age:</strong> {{ $patient->age }}</div>
+                <div class="col-md-4"><strong>Gender:</strong> {{ ucfirst($patient->gender) }}</div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-md-4"><strong>Contact No.:</strong> {{ $patient->contact }}</div>
+                <div class="col-md-4"><strong>Email:</strong> {{ $patient->email }}</div>
+                <div class="col-md-4"><strong>Marital Status:</strong> {{ $patient->marital }}</div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="row mt-3">
-                <div class="col">
-                    <div class="card p-3">
-                        <span class="text-primary">Appointments</span>
-                        <div class="table mt-3">
-                            <table class="table table-striped table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Doctor</th>
-                                        <th>Date</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-header text-white fw-bold" style="background-color: #0e2238;">
+                    <i class="fas fa-notes-medical me-1"></i> Medical History
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Medical History</th>
+                                    <th>Prescriptions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Appointments -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-header text-white fw-bold" style="background-color: #0e2238">
+                    <i class="fas fa-calendar-check me-1"></i> Appointments
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Doctor</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                    
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
 </div>
 @endsection

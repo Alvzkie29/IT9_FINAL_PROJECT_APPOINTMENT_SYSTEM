@@ -327,32 +327,32 @@
                     </ul>
                 </li>
                 <li class="sidebar-item">
-                    <a href="" class="sidebar-link has-dropdown collapsed"data-bs-toggle="collapse"
-                    data-bs-target="#setting" aria-expanded="false" aria-controls="setting">
-                    <i class="ri-settings-2-line"></i>
-                    <span>Settings</span>
+                    <a href="" class="sidebar-link has-dropdown collapsed" data-bs-toggle="collapse"
+                       data-bs-target="#setting" aria-expanded="false" aria-controls="setting">
+                        <i class="ri-settings-2-line"></i>
+                        <span>Settings</span>
                     </a>
-                    <ul id="setting" class="sidebar-dropdown list-unstyled collapse"
-                        data-bs-parent="#sidebar">
+                    <ul id="setting" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                         <li class="sidebar-item">
-                            <a href="{{route('profile.edit')}}" 
-                            class="sidebar-link"
-                            hx-boost="true"
-                            hx-push-url="true">
-                            <i class="ri-profile-line"></i>Profile</a>
+                            <a href="{{ route('profile.edit') }}"
+                               class="sidebar-link"
+                               hx-boost="true"
+                               hx-push-url="true">
+                               {{ Auth::user()->email }}
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="sidebar-link logout-btn" style="background: none; border: none;">
+                                    <i class="ri-logout-box-line"></i>Logout
+                                    
+                                </button>
+                            </form>
                         </li>
                     </ul>
                 </li>
             </ul> 
-            <div class="sidebar-item">
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button type="submit" class="sidebar-link logout-btn">
-                        <i class="ri-logout-box-line"></i>
-                        <span>Logout</span>
-                    </button>
-                </form>
-            </div>
         </aside>
         <div class="main p-3">
                 @yield('content')

@@ -164,9 +164,30 @@ class BookingController extends Controller
 
     public function records()
     {
-        $records = AppointmentRecord::with('booking.patient.user', 'booking.doctor')->get();
+        $records = AppointmentRecord::with('booking.patient.user', 'booking.doctor')
+            ->paginate(10); 
         return view('appointment_record', compact('records'));
     }
+    public function search(Request $request)
+{
+    $query = $request->input('search');
+
+    $records = AppointmentRecord::with('booking.patient.user', 'booking.doctor')
+        ->whereHas('booking.patient.user', function ($subQuery) use ($query) {
+            $subQuery->where('name', 'LIKE', "%{$query}%");
+        })
+        ->orWhereHas('booking.doctor', function ($subQuery) use ($query) {
+            $subQuery->where('firstname', 'LIKE', "%{$query}%")
+                     ->orWhere('lastname', 'LIKE', "%{$query}%");
+        })
+        ->orWhereHas('booking', function ($subQuery) use ($query) {
+            $subQuery->where('concern', 'LIKE', "%{$query}%");
+        })
+        ->paginate(10)
+        ->appends(['search' => $query]);
+
+    return view('appointment_record', compact('records'));
+}
 
 }
 

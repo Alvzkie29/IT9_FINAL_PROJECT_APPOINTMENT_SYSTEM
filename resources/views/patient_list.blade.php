@@ -63,22 +63,22 @@
                                         </button>
                                         <ul class="dropdown-menu shadow-sm border-0 rounded-3" aria-labelledby="dropdownMenuButton">
                                             <li>
-                                                <a href="{{ route('patient.edit', $patient->id) }}" class="dropdown-item text-success fw-bold">
-                                                    <i class="fa-solid fa-pen-to-square me-2"></i> Edit
+                                                <a href="{{ route('patient.edit', $patient->id) }}" class="dropdown-item text-success">
+                                                    Edit
                                                 </a>
                                             </li>
                                             <li>
                                                 <form action="{{ route('patients.destroy', $patient->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this patient?');">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn text-danger fw-bold dropdown-item">
-                                                        <i class="fa-solid fa-trash me-2"></i> Delete
+                                                    <button type="submit" class="btn text-danger dropdown-item">
+                                                       Delete
                                                     </button>
                                                 </form>
                                             </li>
                                             <li>
-                                                <a href="{{ route('patients.show', $patient->id) }}" class="dropdown-item text-primary fw-bold">
-                                                    <i class="fa-solid fa-eye me-2"></i> View
+                                                <a href="{{ route('patients.show', $patient->id) }}" class="dropdown-item text-primary">
+                                                     View
                                                 </a>
                                             </li>
                                         </ul>

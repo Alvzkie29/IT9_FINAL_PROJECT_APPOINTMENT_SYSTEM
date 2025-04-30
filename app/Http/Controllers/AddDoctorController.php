@@ -45,19 +45,35 @@ class AddDoctorController extends Controller
         return redirect()->route('DoctorList')->with('success', 'Doctor added successfully!');
     }
 
-    public function show()
+    public function searchDoctors(Request $request)
     {
-        $DoctorRecord = AddDoctor::all(); 
-        return view('doctor_record', compact('DoctorRecord')); 
+        $searchTerm = $request->input('search');
+        $query = AddDoctor::query();
+
+        if ($searchTerm) {
+            $query->where('firstname', 'LIKE', "%{$searchTerm}%")
+                  ->orWhere('lastname', 'LIKE', "%{$searchTerm}%")
+                  ->orWhere('email', 'LIKE', "%{$searchTerm}%");
+        }
+
+        return $query;
     }
 
-    public function list()
+    public function list(Request $request)
     {
-        $Doctorlist = AddDoctor::all();
-        return view('doctor_list', compact('Doctorlist')); 
+        $query = $this->searchDoctors($request);
+        $Doctorlist = $query->paginate(4);
+
+        return view('doctor_list', compact('Doctorlist'));
     }
 
-    
+    public function paginateDoctors(Request $request)
+    {
+        $query = $this->searchDoctors($request);
+        $DoctorRecord = $query->paginate(2);
+
+        return view('doctor_record', compact('DoctorRecord'));
+    }
 
     public function edit($DoctorId)
     {
@@ -136,4 +152,8 @@ public function update(Request $request, $DoctorId)
 
         return view('user.booking', compact('doctors'));  
     }
+
+    
+
+
 }

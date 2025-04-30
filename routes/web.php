@@ -10,6 +10,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AddDoctorController;
 use App\Http\Controllers\DoctorAvailabilityController;
 use App\Http\Controllers\AuthenticatedSessionController;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
     return redirect()->route('login'); // Redirect to login page by default
@@ -27,11 +28,8 @@ Route::get('/redirect', function () {
 })->name('redirect');
 
 
-Route::middleware(['auth' , 'role:admin'])->group(function () {
-    
-    Route::get('/Admin/Dashboard', function () {
-        return view('mainpage');
-    })->name('mainpage');
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/Admin/Dashboard', [DashboardController::class, 'index'])->name('mainpage');
 
     Route::middleware('auth')->group(function () {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -43,6 +41,7 @@ Route::middleware(['auth' , 'role:admin'])->group(function () {
     Route::post('/appointmentlist/{id}/confirm', [BookingController::class, 'confirm'])->name('appointmentlist.confirm');
 
     Route::get('/appointmentrecords', [BookingController::class, 'records'])->name('appointmentrecord');
+    Route::get('/appointmentrecords/search', [BookingController::class, 'search'])->name('appointmentrecord.search');
 
     // for doctors
     Route::get('/AddDoctor', function () {
@@ -51,7 +50,7 @@ Route::middleware(['auth' , 'role:admin'])->group(function () {
 
     Route::post('/AddDoctor', [AddDoctorController::class, 'store'])->name('StoreDoctor');
     Route::get('/DoctorList', [AddDoctorController::class, 'list'])->name('DoctorList');     
-    Route::get('/DoctorRecord', [AddDoctorController::class, 'show'])->name('DoctorRecord');
+    Route::get('/DoctorRecord', [AddDoctorController::class, 'paginateDoctors'])->name('DoctorRecord');
     Route::get('/doctor/edit/{DoctorId}', [AddDoctorController::class, 'edit'])->name('DoctorEdit');
     Route::put('/doctor/update/{DoctorId}', [AddDoctorController::class, 'update'])->name('DoctorUpdate');
     Route::delete('/doctor/{id}', [AddDoctorController::class, 'destroy'])->name('DeleteDoctor');

@@ -98,5 +98,6 @@ public function search(Request $request)
 
     return view('patient_list', compact('patients'));
 }
+
 }
 

@@ -7,13 +7,22 @@
     <h1 class="text-primary">Doctor Records </h1>
     <div class="border"></div>
      <div class="row mt-3 justify-content-end">
-         <div class="col-md-3">
-             <div class="input-group">
-                <input type="text" name="search" class="form-control w-25 me-2" placeholder="Search patients..." value="{{ request('search') }}">
+    <div class="col-md-3">
+        <form action="{{ route('DoctorRecord') }}" method="GET">
+            <div class="input-group">
+                <input type="text" name="search" class="form-control w-25 me-2" placeholder="Search doctors..." value="{{ request('search') }}">
                 <button type="submit" class="btn btn-primary btn-sm">Search</button>
-             </div>
-         </div>
-     </div>
+            </div>
+        </form>
+    </div>
+</div>
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    
+    @endif
      <div class="row mt-5">
          <div class="table">
              <table class="table align-middle mb-0 bg-white table-striped ">
@@ -82,7 +91,9 @@
                      @endforelse
                  </tbody>
              </table>
-         </div>
+         </div> 
+        <div class="d-flex justify-content-center mt-3">
+            {{ $DoctorRecord->appends(['search' => request('search')])->links() }} 
      </div>
  </div>
 @endsection
