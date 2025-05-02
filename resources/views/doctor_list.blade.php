@@ -1,6 +1,6 @@
 @extends('layouts.app')
-
 @section('title', 'Doctor List')
+@section('scripts')
 @section('content')
 
 <div class="main">
@@ -8,7 +8,9 @@
     <div class="border"></div>
         <div class="row mt-4">
             <div class="col">
-                <form method="GET" action="{{ route('DoctorList') }}">
+                <form hx-get="{{ route('DoctorList') }}"
+                      hx-target="body"
+                      hx-push-url="true">
                     <div class="row mt-2 justify-content-between">
                         <div class="col-md-4">
                             <div class="input-group">
@@ -23,14 +25,16 @@
                 </form>
                 <div class="row mt-4">
                     @foreach($Doctorlist as $Doctor)
-                    <div class="col-md-4 mt-2">
-                        <div class="card  rounded-4 overflow-hidden bg-light mb-4">
-                            <div class="bg-primary text-white py-3">
+                    <div class="col-md-3 mt-2">
+                        <div class="border border-0 shadow-sm text-center bg-white rounded-4 overflow-hidden mb-4">
+                            <div class="text-white py-3" style="background-color: #0e2238;">
                                 <h4 class="text-center mb-0 fw-bold">Doctor Details</h4>
                             </div>
                             <div class="row align-content-end mt-3 p-2">
                                 <div class="col d-flex justify-content-end">
                                     <a href="{{ route('Availability', ['DoctorId' => $Doctor->DoctorId]) }}" 
+                                       hx-boost="true"
+                                       hx-push-url="true"
                                        class="btn btn-sm border border-secondary rounded-pill me-1">
                                        <i class="ri-calendar-2-line"  style="font-size: 23px;"></i>
                                     </a>
@@ -38,7 +42,7 @@
                             </div>
                             <div class="row mt-2 mb-2">
                                 <div class="col d-flex justify-content-center">
-                                    <img src="{{ $Doctor->image_path ? asset('storage/' . $Doctor->image_path) : asset('default-image.png') }}" alt="Doctor Image" width="200" height="200" class="mb-2">
+                                    <img src="{{ $Doctor->image_path ? asset('storage/' . $Doctor->image_path) : asset('default-image.png') }}" alt="Doctor Image" width="100" height="100" class="mb-2">
                                 </div>
                             </div>
                             <div class="row mt-2 p-2">
@@ -48,6 +52,7 @@
                                 </div>
                             </div>
                             <hr class="my-3">
+                           <div class="row p-3">
                             <div class="d-flex justify-content-center flex-wrap">
                                 @foreach(['M', 'T', 'W', 'TH', 'F', 'SAT', 'SUN'] as $day)
                                     <div class="border mx-1 my-1 d-flex align-items-center justify-content-center" 
@@ -63,6 +68,7 @@
                                     </div>
                                 @endforeach
                             </div>
+                           </div>
                         </div>
                     </div>
                     @endforeach 

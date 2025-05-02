@@ -125,6 +125,11 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('PatientInfo', [PatientController::class, 'fetchPatientInfo'])->name('PatientInfo'); 
 });
 
+Route::get('/monthly-appointments', [DashboardController::class, 'getMonthlyAppointments'])->name('monthly.appointments');
+Route::get('/appointments/daily/{year}/{month}', [DashboardController::class, 'getAppointmentsByMonth'])->name('appointments.byMonth');
+Route::get('/appointments/yearly/{year}', [DashboardController::class, 'getAppointmentsByYear'])->name('appointments.byYear');
+
+
 
 require __DIR__.'/auth.php';
 

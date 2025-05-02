@@ -1,16 +1,23 @@
 @extends('layouts.app')
 @section('title', 'Edit Patient')
+@section('scripts')
 @section('content')
 
 <div class="main p-2">
    <div class="d-flex align-items-center mb-4">
-    <a href="{{route('PatientList')}}" class="btn btn-outline-primary me-3">
+    <a href="{{ route('PatientList') }}" 
+       class="btn btn-outline-primary me-3"
+       hx-boost="true"
+       hx-push-url="true">
         <i class="ri-arrow-go-back-fill"></i>&nbsp Back
     </a>
     <h3 class="tmb-0 text-primary">Edit Patient Information</h3>
    </div>
     <div class="card p-4 bg-light shadow-sm rounded-4">
-        <form action="{{ route('patients.update', $patient->id) }}" method="POST">
+        <form 
+            hx-post="{{ route('patients.update', $patient->id) }}"
+            hx-target="body"
+            hx-push-url="true">
             @csrf
             @method('PUT')
             <h5 class="fw-bold mb-3 border-bottom pb-2">Patient Details</h5>

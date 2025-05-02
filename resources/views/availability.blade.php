@@ -1,10 +1,15 @@
 @extends('layouts.app')
+@section('title', 'Doctor Availability')
+@section('scripts')
 @section('content')
 <div class="main">
     <div class="">
         <div class="">
             <div class="d-flex align-items-center mb-3">
-                <a class="btn btn-sm btn-primary rounded me-2" href="{{ route('DoctorList') }}">
+                <a class="btn btn-sm btn-primary rounded me-2" 
+                   hx-get="{{ route('DoctorList') }}" 
+                   hx-target="body" 
+                   hx-push-url="true">
                     <i class="ri-arrow-go-back-fill"></i>
                 </a>
                 <h1 class="text-primary mb-0">Doctor Availability</h1>
@@ -23,9 +28,10 @@
             </div>
         @endif
         @if (session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
+        <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
         @endif
         @if (session('delete_success'))
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -37,7 +43,9 @@
             <div class="card p-3">
                 <div class="row mt-3">
                     <div class="col-md-3">
-                        <form action="{{ route('DoctorAvailability.store') }}" method="POST">
+                        <form hx-post="{{ route('DoctorAvailability.store') }}"
+                            hx-target="body"
+                            hx-push-url="true">
                             @csrf
                             <input type="hidden" name="DoctorId" value="{{ $DoctorId }}">
         
@@ -45,6 +53,7 @@
                                 <label for="day">Select Day</label>
                                 <select name="day" id="day" class="w-full p-2 border rounded form-control">
                                     @foreach(['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'] as $day)
+                                        <option value="" hidden>Select Day</option>
                                         <option value="{{ $day }}">{{ ucfirst($day) }}</option>
                                     @endforeach
                                 </select>
@@ -104,7 +113,10 @@
                                         </span>
                                     </td>
                                     <td>
-                                        <form action="{{ route('ToggleDoctorAvailability', $availability->AvailabilityId) }}" method="POST" class="d-inline">
+                                        <form hx-post="{{ route('ToggleDoctorAvailability', $availability->AvailabilityId) }}"
+                                            hx-target="body"
+                                            hx-push-url="true"
+                                            class="d-inline">
                                             @csrf
                                             @method('PATCH')
                                             <button type="submit" class="btn btn-sm" style="background-color: bisque;">
@@ -118,15 +130,17 @@
                                             data-end_time="{{ $availability->end_time }}"
                                             data-bs-toggle="modal" 
                                             data-bs-target="#staticBackdrop">
-                                            <i class="fa-solid fa-pen-to-square"></i>
+                                            <i class="ri-edit-2-line"></i>
                                         </button>
-                                        <form action="{{ route('DeleteDoctorAvailability', $availability->AvailabilityId) }}" method="POST" 
-                                            onsubmit="return confirm('Are you sure you want to remove this Doctor?');"
+                                        <form hx-post="{{ route('DeleteDoctorAvailability', $availability->AvailabilityId) }}"
+                                            hx-target="body"
+                                            hx-push-url="true"
+                                            onsubmit="return confirm('Are you sure you want to remove this Doctor Availability?');"
                                             class="d-inline">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm" style="background-color: white; color: black; border-color: red;">
-                                            <i class="fa-solid fa-trash"></i>
+                                            <i class="ri-delete-bin-5-line"></i>
                                         </button>
                                     </form>
 
@@ -141,7 +155,9 @@
        <!-- Modal -->
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
-        <form method="POST" action="{{ route('UpdateDoctorAvailability') }}">
+        <form  hx-post="{{ route('UpdateDoctorAvailability') }}"
+            hx-target="body"
+            hx-push-url="true">
             @csrf
             @method('PUT')
             <input type="hidden" name="availability_id" id="edit_availability_id">

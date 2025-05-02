@@ -1,19 +1,20 @@
 @extends('layouts.app')
 
 @section('title', 'Patient Records')
-
+@section('scripts')
 @section('content')
 <div class="main p-2">
-
-    <!-- Header and Back Button -->
     <div class="d-flex align-items-center mb-4">
-        <a href="{{ route('PatientList') }}" class="btn btn-outline-primary me-3">
+        <a 
+            hx-get="{{ route('PatientList') }}" 
+            class="btn btn-outline-primary me-3"
+            hx-boost="true"
+            hx-target="body"
+           hx-push-url="true">
             <i class="ri-arrow-go-back-fill"></i> &nbsp Back to List
         </a>
         <h2 class="mb-0 text-primary">Patient Records</h2>
     </div>
-
-    <!-- Patient Information -->
     <div class="card shadow-sm mb-4">
         <div class="card-header text-white fw-bold" style="background-color: #0e2238;">
             Personal Information
@@ -31,7 +32,6 @@
             </div>
         </div>
     </div>
-
     <div class="row">
         <div class="col-md-6 mb-4">
             <div class="card shadow-sm h-100">
@@ -94,4 +94,5 @@
     </div>
 
 </div>
+
 @endsection

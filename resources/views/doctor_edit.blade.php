@@ -1,13 +1,17 @@
 @extends('layouts.app')
-
 @section('title', 'Edit Doctor')
-
+@section('scripts')
 @section('content')
 <div class="main p-2">
     <div class="d-flex align-items-center mb-4">
-        <a href="{{ route('DoctorRecord') }}" class="btn btn-outline-primary me-3">
-            <i class="ri-arrow-go-back-fill"></i>&nbsp Back
+        <a 
+            hx-get="{{ route('DoctorRecord') }}" 
+            hx-target="body" 
+            hx-push-url="true"
+            class="btn btn-outline-primary me-3">
+            <i class="ri-arrow-go-back-fill"></i>&nbsp Back to List
         </a>
+     
         <h3 class="mb-0 text-primary">Edit Doctor Information</h3>
     </div>
     <div class="card shadow-sm p-4 bg-light rounded-4">

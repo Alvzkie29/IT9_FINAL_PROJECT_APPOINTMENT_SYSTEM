@@ -1,7 +1,6 @@
 @extends("layouts.app")
-
 @section("title", "Appointment Record")
-
+@section("scripts")
 @section("content")
 <div class="card shadow-lg border-0 rounded-4">
     <div class="card-header text-white text-center rounded-top" style="background-color: #0e2238;">
@@ -11,7 +10,10 @@
     <div class="card-body">
         <div class="row mt-2">
             <div class="col-md-4">
-                <form action="{{ route('appointmentrecord.search') }}" method="GET" class="mb-3">
+                <form hx-get="{{ route('appointmentrecord.search') }}"
+                hx-target="body"
+                hx-push-url="true"
+                class="mb-3">
                     <div class="input-group">
                         <input type="text" name="search" class="form-control" placeholder="Search by patient, doctor, or concern..." value="{{ request('search') }}">
                         <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Search</button>

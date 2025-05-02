@@ -1,7 +1,6 @@
 @extends('layouts.app')
-
 @section('title', 'Appointment Requests')
-
+@section('scripts')
 @section('content')
 <div class="card shadow-lg border-0 rounded-4">
     <div class="card-header text-white text-center rounded-top" style="background-color: #0e2238;">
@@ -39,7 +38,10 @@
                         </td>
                         <td>
                             @if($booking->status == 'pending')
-                            <form action="{{ route('appointmentlist.confirm', ['id' => $booking->BookingId]) }}" method="POST">
+                            <form 
+                                hx-post="{{ route('appointmentlist.confirm', ['id' => $booking->BookingId]) }}"
+                                hx-target="body"
+                                hx-push-url="true">
                                 @csrf
                                 <button type="submit" class="btn btn-success btn-sm">
                                     <i class="fas fa-check"></i> Confirm

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Doctor Records')
+@section('scripts')
 @section('content')
 
 <div class="main">
@@ -8,7 +9,9 @@
     <div class="border"></div>
      <div class="row mt-3 justify-content-end">
     <div class="col-md-3">
-        <form action="{{ route('DoctorRecord') }}" method="GET">
+        <form hx-get="{{ route('DoctorRecord') }}"
+            hx-target="body"
+            hx-push-url="true">
             <div class="input-group">
                 <input type="text" name="search" class="form-control w-25 me-2" placeholder="Search doctors..." value="{{ request('search') }}">
                 <button type="submit" class="btn btn-primary btn-sm">Search</button>
@@ -69,10 +72,22 @@
                                 </button>
                         
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <li><a href="{{ route('DoctorView', $record->DoctorId) }}" class="dropdown-item text-success">View</a></li>
-                                    <li><a href="{{ route('DoctorEdit', $record->DoctorId) }}" class="dropdown-item text-secondary">Edit</a></li>
                                     <li>
-                                        <form action="{{ route('DeleteDoctor', $record->DoctorId) }}" method="POST" 
+                                        <a href="{{ route('DoctorView', $record->DoctorId) }}"
+                                        hx-boost="true"
+                                        hx-push-url="true"
+                                        class="dropdown-item text-success">View</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('DoctorEdit', $record->DoctorId) }}"
+                                        hx-boost="true"
+                                        hx-push-url="true" 
+                                        class="dropdown-item text-secondary">Edit</a>
+                                    </li>
+                                    <li>
+                                        <form hx-post="{{ route('DeleteDoctor', $record->DoctorId) }}"
+                                            hx-target="body"
+                                            hx-push-url="true"
                                             onsubmit="return confirm('Are you sure you want to remove this Doctor?');"
                                             class="d-inline">
                                         @csrf

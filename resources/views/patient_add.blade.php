@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('title', 'Add Patient')
+@section('scripts')
 @section('content')
 
 <div class="main">
@@ -16,7 +17,10 @@
 
             <div class="card p-3">
                 <span class="text-primary">Patients Details:</span>
-                <form action="{{ route('StoredPatient') }}" method="POST">
+                <form 
+                hx-post="{{ route('StoredPatient') }}"
+                hx-target="body"
+                hx-push-url="true">
                     @csrf
                     <div class="row mt-2">
                         <div class="col-md-3">

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/htmx.org@1.9.6"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css" integrity="sha512-kJlvECunwXftkPwyvHbclArO8wszgBGisiLeuDFwNM8ws+wKIw0sv1os3ClWZOcrEB2eRXULYUsm8OVRGJKwGA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kQvGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <title>@yield("title, Default title")</title>
@@ -218,14 +217,18 @@
                     <ul id="appointment" class="sidebar-dropdown list-unstyled collapse"
                         data-bs-parent="#sidebar">
                         <li class="sidebar-item">
-                            <a href="{{ route('appointmentlist') }}" class="sidebar-link">
-                                <i class="ri-notification-2-fill"></i> Appointment List
+                            <a href="{{ route('appointmentlist') }}" class="sidebar-link"
+                            hx-boost="true"
+                            hx-push-url="true">
+                            <i class="ri-notification-2-fill"></i> Appointment List
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a href="{{route('appointmentrecord')}}" 
-                            class="sidebar-link">
-                                <i class="ri-folder-history-fill"></i> Appointment Record
+                            class="sidebar-link"
+                            hx-boost="true"
+                            hx-push-url="true">
+                            <i class="ri-folder-history-fill"></i> Appointment Record
                             </a>
                         </li>
                     </ul>
@@ -354,14 +357,15 @@
                 </li>
             </ul> 
         </aside>
-        <div class="main p-3">
-                @yield('content')
+        <div class="main p-3" id="mainContent">
+            @yield('content')
         </div>
     </div>
     
 </body>
 
 <script>
+    @yield('scripts')
     if (typeof toggleSidebar === 'undefined') {
         function toggleSidebar() {
             const toggleBtn = document.getElementById('toggle-btn');
@@ -381,6 +385,13 @@
     // Rebind after HTMX updates
     document.body.addEventListener('htmx:afterSwap', () => {
         toggleSidebar();
+        // Reinitialize other components if needed
+        document.addEventListener("htmx:beforeRequest", function() {
+                document.getElementById("reload-bar").style.display = "block";
+            });
+
+            document.addEventListener("htmx:afterRequest", function() {
+                document.getElementById("reload-bar").style.display = "none";
     });
 </script>
 </html>

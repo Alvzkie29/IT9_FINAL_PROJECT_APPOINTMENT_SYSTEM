@@ -1,11 +1,16 @@
 @extends('layouts.app')
 @section('title', 'View Doctor')
+@section('scripts')
 @section('content')
 
 <div class="main">
     <div class="d-flex align-items-center mb-3">
-        <a class="btn btn-sm btn-primary rounded me-2" href="{{ route('DoctorRecord') }}">
-            <i class="ri-arrow-go-back-fill"></i>
+        <a 
+            hx-get="{{ route('DoctorRecord') }}" 
+            hx-target="body" 
+            hx-push-url="true"
+            class="btn btn-outline-primary me-3">
+            <i class="ri-arrow-go-back-fill"></i>&nbsp Back to List
         </a>
         <h1 class="text-primary mb-0">Doctor Details</h1>
     </div>
@@ -13,9 +18,9 @@
         <div class="border shadow-sm mb-5 rounded-4 p-4 bg-light mt-2">
             <div class="row mt-3 justify-content-center">
                 @if($doctor->image_path)
-                    <img src="{{ asset('storage/' . $doctor->image_path) }}" alt="Doctor Image" class="img-fluid" style="width: 400px; height: 400px;">
+                    <img src="{{ asset('storage/' . $doctor->image_path) }}" alt="Doctor Image" class="img-fluid" style="width: 200px; height: 200px;">
                 @else
-                    <img src="{{ asset('doctor_images/default-doctor.jpg') }}" alt="Default Image" class="img-fluid" style="width: 400px; height: 400px;">
+                    <img src="{{ asset('doctor_images/default-doctor.jpg') }}" alt="Default Image" class="img-fluid" style="width: 200px; height: 200px;">
                 @endif
             <div class="row mt-5 text-center">
                 <h1 style="font-size: 40px">DR. {{ $doctor->firstname }}</h1>

@@ -1,11 +1,15 @@
 @extends('layouts.app')
 @section('title', 'Add Doctor')
+@section('scripts')
 @section('content')
 
 <div class="main p-3">
     <div class="row mt-3">
         <div class="card  rounded-4 p-4 bg-light">
-            <form method="POST" action="{{ route('StoreDoctor') }}" enctype="multipart/form-data">
+            <form  hx-post="{{ route('StoreDoctor') }}"
+                hx-target="body"
+                hx-push-url="true"
+                enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <div class="row mt-2">
