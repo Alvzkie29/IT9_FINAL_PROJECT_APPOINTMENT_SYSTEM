@@ -1,3 +1,8 @@
+@php
+    $notifications = Auth::user()->unreadNotifications;
+@endphp
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -86,6 +91,28 @@ animation: fadeIn 0.5s ease-in-out;
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle position-relative" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            🔔
+                            @if($notifications->count() > 0)
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    {{ $notifications->count() }}
+                                </span>
+                            @endif
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown" style="width: 300px;">
+                            @forelse($notifications as $notification)
+                                <li>
+                                    <a class="dropdown-item text-wrap" href="{{ route('notifications.read', $notification->id) }}">
+                                        {{ $notification->data['message'] ?? 'New Notification' }}
+                                        <br><small class="text-muted">{{ $notification->created_at->diffForHumans() }}</small>
+                                    </a>
+                                </li>
+                            @empty
+                                <li><span class="dropdown-item text-muted">No new notifications</span></li>
+                            @endforelse
+                        </ul>
+                    </li>
                     <li class="nav-item"><a class="nav-link" href="{{route("user.dashboard")}}">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Doctors</a></li>

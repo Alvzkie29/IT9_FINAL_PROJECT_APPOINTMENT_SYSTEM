@@ -51,9 +51,9 @@
         
                             <div class="form-group">
                                 <label for="day">Select Day</label>
-                                <select name="day" id="day" class="w-full p-2 border rounded form-control">
+                                <select name="day" id="day" class="w-full p-2 border rounded form-control" required>
+                                    <option value="" hidden selected>Select Day</option>
                                     @foreach(['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'] as $day)
-                                        <option value="" hidden>Select Day</option>
                                         <option value="{{ $day }}">{{ ucfirst($day) }}</option>
                                     @endforeach
                                 </select>
@@ -108,21 +108,19 @@
                                         {{ $availability->end_time ? \Carbon\Carbon::createFromFormat('H:i:s', $availability->end_time)->format('h:i A') : 'N/A' }}
                                     </td>
                                     <td>
-                                        <span class="badge {{ $availability->status === 1 ? 'bg-success' : 'bg-danger' }} rounded-pill d-inline">
-                                            {{ $availability->status === 1 ? 'Available' : 'Not Available' }}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <form hx-post="{{ route('ToggleDoctorAvailability', $availability->AvailabilityId) }}"
-                                            hx-target="body"
-                                            hx-push-url="true"
-                                            class="d-inline">
+                                        <form action="{{ route('ToggleDoctorAvailability', $availability->AvailabilityId) }}" method="POST" style="display:inline;">
                                             @csrf
                                             @method('PATCH')
-                                            <button type="submit" class="btn btn-sm" style="background-color: bisque;">
-                                                <i class="ri-error-warning-line"></i>
+                                            <button type="submit" class="btn btn-toggle">
+                                                @if($availability->status)
+                                                    <p class="btn btn-sm btn-success">Available</p>
+                                                @else
+                                                <p class="btn btn-sm btn-danger">Not Available</p>
+                                                @endif
                                             </button>
-                                        </form>
+                                        </form> 
+                                    </td>
+                                    <td>
                                         <button 
                                             class="btn btn-secondary btn-sm rounded-fill editBtn" style="background-color: white; color: black; border-color: green;"
                                             data-id="{{ $availability->AvailabilityId }}"

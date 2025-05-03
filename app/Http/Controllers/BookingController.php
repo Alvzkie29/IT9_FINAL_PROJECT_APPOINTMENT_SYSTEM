@@ -8,6 +8,9 @@ use App\Models\Patient;
 use App\Models\AddDoctor;
 use App\Models\DoctorAvailability;
 use App\Models\AppointmentRecord;
+use App\Models\User;
+use App\Notifications\NewAppointmentNotification;
+use App\Notifications\AppointmentConfirmedNotification;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Support\Facades\Auth;
@@ -42,6 +45,16 @@ class BookingController extends Controller
         if (!$patient) {
             return redirect()->route('AccountDetails')->with('error', 'Please complete your patient information first.');
         }
+
+        $day = Carbon::parse($request->date)->format('l'); 
+        $isAvailable = DoctorAvailability::where('DoctorId', $request->doctor_id)
+            ->where('day', $day)
+            ->where('status', true)
+            ->exists();
+    
+        if (!$isAvailable) {
+            return redirect()->back()->with('error', 'This doctor is not available on the selected date.')->withInput();
+        }
     
         // 🚀 Check if any booking already exists for that doctor/date/time
         $existingBooking = Booking::where('doctor_id', $request->doctor_id)
@@ -55,7 +68,7 @@ class BookingController extends Controller
         }
     
         // ✅ No conflicting booking found, safe to create
-        Booking::create([
+        $booking = Booking::create([
             'patient_id' => $patient->id,
             'doctor_id' => $request->doctor_id,
             'date' => $request->date,
@@ -63,7 +76,8 @@ class BookingController extends Controller
             'concern' => $request->concern,
             'status' => 'pending',
         ]);
-    
+        $admin = User::where('role', 'admin')->first();
+        $admin?->notify(new NewAppointmentNotification($booking));
         return redirect()->route('user.history')->with('success', 'Appointment request submitted successfully!');
     }
     
@@ -81,6 +95,7 @@ class BookingController extends Controller
         return view('user.history', compact('bookings'));
     }
 
+    
     public function cancel($id)
     {
         $booking = Booking::findOrFail($id);
@@ -91,6 +106,13 @@ class BookingController extends Controller
             'booking_id' => $booking->BookingId,
             'status' => 'cancelled',
         ]);
+
+        $admin = User::where('role', 'admin')->first();
+        if ($admin) {
+            $admin->notifications()
+                ->where('data->booking_id', $booking->BookingId)
+                ->delete();
+        }
 
         return redirect()->back()->with('success', 'Appointment cancelled successfully.');
     }
@@ -158,7 +180,8 @@ class BookingController extends Controller
             'booking_id' => $booking->BookingId,
             'status' => 'confirmed'
         ]);
-
+        
+        $booking->patient->user->notify(new AppointmentConfirmedNotification($booking));
         return redirect()->route('appointmentlist')->with('success', 'Appointment confirmed!');
     }
 

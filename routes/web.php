@@ -9,6 +9,7 @@ use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AddDoctorController;
 use App\Http\Controllers\DoctorAvailabilityController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\AuthenticatedSessionController;
 use App\Http\Controllers\DashboardController;
 
@@ -98,6 +99,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 });
 
 Route::post('/AddPatient',[PatientController::class, 'store'])->name('StoredPatient');
+Route::get('/notifications/read/{id}', [NotificationController::class, 'markAsRead'])->name('notifications.read');
+
+
 
 Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/user/dashboard', function () {

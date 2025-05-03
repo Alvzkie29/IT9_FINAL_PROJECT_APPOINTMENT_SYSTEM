@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\AddDoctor;
 use App\Models\DoctorAvailability;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -61,10 +62,18 @@ class AddDoctorController extends Controller
 
     public function list(Request $request)
     {
+        // Perform your search query
         $query = $this->searchDoctors($request);
-        $Doctorlist = $query->paginate(4);
 
-        return view('doctor_list', compact('Doctorlist'));
+        // Eager load the availabilities
+        $Doctorlist = $query->with('availabilities')->paginate(4);
+
+        // Get the current day and time
+        $currentDay = Carbon::now()->format('l');       // e.g., 'Monday'
+        $currentTime = Carbon::now()->format('H:i:s');  // e.g., '08:00:00'
+
+        // Pass everything to the view
+        return view('doctor_list', compact('Doctorlist', 'currentDay', 'currentTime'));
     }
 
     public function paginateDoctors(Request $request)

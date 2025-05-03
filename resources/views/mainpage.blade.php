@@ -1,3 +1,8 @@
+@php
+    $notifications = Auth::user()->unreadNotifications;
+@endphp
+
+
 @extends('layouts.app')
 
 @section('title', 'Clinic Dashboard')
@@ -10,6 +15,28 @@
                 <h1 class="fw-bold">Welcome, Clinic Administrator</h1>
                 <p class="text-muted">Efficiently manage doctors, appointments, and patients in one place.</p>
             </div>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle position-relative" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    🔔
+                    @if($notifications->count() > 0)
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            {{ $notifications->count() }}
+                        </span>
+                    @endif
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown" style="width: 300px;">
+                    @forelse($notifications as $notification)
+                        <li>
+                            <a class="dropdown-item text-wrap" href="{{ route('notifications.read', $notification->id) }}">
+                                {{ $notification->data['message'] ?? 'New Notification' }}
+                                <br><small class="text-muted">{{ $notification->created_at->diffForHumans() }}</small>
+                            </a>
+                        </li>
+                    @empty
+                        <li><span class="dropdown-item text-muted">No new notifications</span></li>
+                    @endforelse
+                </ul>
+            </li>
         </div>
     </div>
     <div class="row mt-4">

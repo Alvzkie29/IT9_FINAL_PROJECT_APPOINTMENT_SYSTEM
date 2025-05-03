@@ -33,5 +33,8 @@ class AddDoctor extends Model
     public function doctorAvailability(){
         return $this->hasMany(DoctorAvailability::class);
     }
-    
+    public function availabilities()
+    {
+        return $this->hasMany(DoctorAvailability::class, 'DoctorId', 'DoctorId');
+    }
 }
