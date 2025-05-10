@@ -162,6 +162,11 @@ public function update(Request $request, $DoctorId)
         return view('user.booking', compact('doctors'));  
     }
 
+    public function DoctorView()
+    {
+        $Doctorlist = AddDoctor::paginate(10);  
+        return view('user.Doctors', compact('Doctorlist'));  
+    }
     
 
 

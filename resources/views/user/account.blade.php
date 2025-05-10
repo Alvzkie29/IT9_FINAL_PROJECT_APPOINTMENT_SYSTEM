@@ -1,8 +1,8 @@
-@extends('layouts.nav') {{-- Or whatever layout you're using --}}
+@extends('layouts.nav') 
 
 @section('content')
-<div class="container mt-2">
-    <div class="hero-section text-center">
+<div class="container mt-2 mb-5 py-5">
+    <div class="hero-section text-center" style="background: linear-gradient(135deg, #0d6efd, #00bcd4);">
         <h1 class="display-4">Book Your Appointment</h1>
         <p class="lead">Choose your doctor and schedule your appointment.</p>
     </div>

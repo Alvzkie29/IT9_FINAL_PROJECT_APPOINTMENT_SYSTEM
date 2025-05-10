@@ -109,6 +109,16 @@ Route::middleware(['auth', 'role:user'])->group(function () {
         return view('user.dashboard'); 
     })->name('user.dashboard');
 
+    Route::get('/About', function () {
+        return view('user.About'); 
+    })->name('user.About');
+
+
+
+    Route::get('/Doctors', [AddDoctorController::class, 'DoctorView'])->name('user.Doctors'); 
+  
+    Route::get('/DoctorList', [AddDoctorController::class, 'list'])->name('DoctorList');
+
     Route::get('/History', [BookingController::class, 'history'])->name('user.history');
     Route::delete('/booking/cancel/{id}', [BookingController::class, 'cancel'])->name('booking.cancel');
 
@@ -117,10 +127,6 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/booking/create', [BookingController::class, 'create'])->name('bookings.create');
     Route::post('/booking', [BookingController::class, 'store'])->name('bookings.store');
     Route::get('/booking/available-slots', [BookingController::class, 'getAvailableTimeSlots'])->name('booking.available-slots');
-
-    Route::get('/MedicalForm', function () {
-        return view('transaction.medical_form'); 
-    })->name('MedicalForm');
 
     
     Route::get('MyAccount', function () {

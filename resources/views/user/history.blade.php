@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="main">
-    <div class="hero-section text-center">
+    <div class="hero-section text-center" style="background: linear-gradient(135deg, #0d6efd, #00bcd4);">
         <h1 class="display-4">Your Appointment History</h1>
         <p class="lead">View all your past and upcoming appointments.</p>
     </div>
