@@ -89,8 +89,8 @@ class BookingController extends Controller
             $query->where('user_id', $user->id);
         })
         ->with('doctor', 'patient.user')
-        ->orderBy('created_at', 'desc') 
-        ->get();
+        ->orderBy('created_at', 'desc')
+        ->paginate(10); // Add pagination
     
         return view('user.history', compact('bookings'));
     }

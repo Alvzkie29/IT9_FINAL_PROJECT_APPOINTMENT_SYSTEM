@@ -94,9 +94,9 @@
                                         @method('DELETE')
                                         <button type="submit" class="dropdown-item text-danger">Delete</button>
                                         </form>
+                                    </li>
                                 </ul>
                             </div>
-                            
                          </td>
                      </tr>
                      @empty
@@ -107,8 +107,5 @@
                  </tbody>
              </table>
          </div> 
-        <div class="d-flex justify-content-center mt-3">
-            {{ $DoctorRecord->appends(['search' => request('search')])->links() }} 
-     </div>
  </div>
 @endsection

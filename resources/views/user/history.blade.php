@@ -63,6 +63,11 @@
                 </div>
             </div>
         @endforeach
+            <div class="mb-5 mt-2">
+                <div class="d-flex justify-content-center">
+                    {{ $bookings->links() }}
+                </div>
+            </div>
     </div>
 </div>
 

@@ -9,10 +9,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield("title, Default title")</title>
+    <script src="https://unpkg.com/htmx.org"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     
 
 <style>
@@ -108,18 +110,39 @@ animation: fadeIn 0.5s ease-in-out;
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="{{route("user.dashboard")}}">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('user.About') }}">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('user.Doctors') }}">Doctors</a></li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="appointmentDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Appointment
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="appointmentDropdown">
-                            <li><a class="dropdown-item" href="{{route("AccountDetails")}}">Book Appointment</a></li>
-                            <li><a class="dropdown-item" href="{{route('user.history')}}">History</a></li>
-                        </ul>
-                    </li>
+                    <li class="nav-item"><a class="nav-link" href="{{route("user.dashboard")}}"
+                        hx-boost="true"
+                        hx-push-url="true">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('user.About') }}"
+                        hx-boost="true"
+                        hx-push-url="true">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('user.Doctors') }}"
+                        hx-boost="true"
+                        hx-push-url="true">Doctors</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="appointmentDropdown" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                Appointment
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="appointmentDropdown">
+                                <li>
+                                    <a class="dropdown-item"
+                                       href="{{ route('AccountDetails') }}"
+                                       hx-boost="true"
+                                       hx-push-url="true">
+                                        Book Appointment
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item"
+                                       href="{{ route('user.history') }}"
+                                       hx-boost="true"
+                                       hx-push-url="true">
+                                        History
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="ri-user-line"></i> Profile
@@ -133,7 +156,9 @@ animation: fadeIn 0.5s ease-in-out;
                             <li class="dropdown-item disabled fw-semibold">🔔 Notifications</li>
                             @forelse($notifications as $notification)
                                 <li>
-                                    <a class="dropdown-item text-wrap" href="{{ route('notifications.read', $notification->id) }}">
+                                    <a class="dropdown-item text-wrap" href="{{ route('notifications.read', $notification->id) }}"
+                                        hx-boost="true"
+                                        hx-push-url="true">
                                         {{ $notification->data['message'] ?? 'New Notification' }}
                                         <br><small class="text-muted">{{ $notification->created_at->diffForHumans() }}</small>
                                     </a>
@@ -161,8 +186,15 @@ animation: fadeIn 0.5s ease-in-out;
     <div class="main">
         @yield('content')
     </div>
-    
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+            document.addEventListener("htmx:beforeRequest", function() {
+                document.getElementById("reload-bar").style.display = "block";
+            });
+
+            document.addEventListener("htmx:afterRequest", function() {
+                document.getElementById("reload-bar").style.display = "none";
+
+            });
+    </script>
 </body>
 </html>

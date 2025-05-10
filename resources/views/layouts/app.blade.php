@@ -289,47 +289,6 @@
                     </ul>
                 </li>
                 <li class="sidebar-item">
-                    <a href="" class="sidebar-link has-dropdown collapsed"data-bs-toggle="collapse"
-                    data-bs-target="#payment" aria-expanded="false" aria-controls="payment">
-                    <i class="ri-shake-hands-line"></i>
-                        <span>Transactions</span>
-                    </a>
-                    <ul id="payment" class="sidebar-dropdown list-unstyled collapse"
-                         data-bs-parent="#sidebar">
-                         <li class="sidebar-item">
-                            <a href="" 
-                            class="sidebar-link"
-                            hx-boost="true"
-                            hx-push-url="true">
-                            <i class="ri-list-view"></i>Transaction List</a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="" 
-                            class="sidebar-link"
-                            hx-boost="true"
-                            hx-push-url="true">
-                            <i class="ri-capsule-line"></i>
-                            Prescription
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="" 
-                            class="sidebar-link"
-                            hx-boost="true"
-                            hx-push-url="true">
-                            <i class="ri-money-dollar-circle-fill"></i>Payment</a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="" 
-                            class="sidebar-link"
-                            hx-boost="true"
-                            hx-push-url="true">
-                            <i class="ri-folder-history-fill"></i>Transaction Records</a>
-                        </li>
-                        
-                    </ul>
-                </li>
-                <li class="sidebar-item">
                     <a href="" class="sidebar-link has-dropdown collapsed" data-bs-toggle="collapse"
                        data-bs-target="#setting" aria-expanded="false" aria-controls="setting">
                         <i class="ri-settings-2-line"></i>

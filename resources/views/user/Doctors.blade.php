@@ -34,13 +34,22 @@
                                 $availability = $Doctor->availabilities->map(function($a) {
                                     $start = \Carbon\Carbon::parse($a->start_time)->format('g:i A');
                                     $end = \Carbon\Carbon::parse($a->end_time)->format('g:i A');
-                                    return $a->day . ' (' . $start . ' - ' . $end . ')';
+                                    return [
+                                        'day' => $a->day,
+                                        'start' => $start,
+                                        'end' => $end,
+                                        'status' => $a->status
+                                    ];
                                 });
                             @endphp
                            
                             @if($availability->isNotEmpty())
                                 @foreach($availability as $slot)
-                                    <div class="text-secondary"> <i class="ri-time-line me-1"></i>{{ $slot }}</div>
+                                    @if($slot['status'] == 0)
+                                        <div class="text-danger"><i class="ri-time-line me-1"></i>{{ $slot['day'] }}: Not Available</div>
+                                    @else
+                                        <div class="text-secondary"><i class="ri-time-line me-1"></i>{{ $slot['day'] }} ({{ $slot['start'] }} - {{ $slot['end'] }})</div>
+                                    @endif
                                 @endforeach
                             @else
                                 <span class="text-muted">No availability set.</span>

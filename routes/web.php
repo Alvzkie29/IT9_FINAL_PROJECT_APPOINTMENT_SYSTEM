@@ -50,8 +50,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     })->name('AddDoctor');
 
     Route::post('/AddDoctor', [AddDoctorController::class, 'store'])->name('StoreDoctor');
-    Route::get('/DoctorList', [AddDoctorController::class, 'list'])->name('DoctorList');     
-    Route::get('/DoctorRecord', [AddDoctorController::class, 'paginateDoctors'])->name('DoctorRecord');
+    Route::get('/DoctorList', [AddDoctorController::class, 'list'])->name('DoctorList');
+         
+    Route::get('/DoctorRecord', [AddDoctorController::class, 'show'])->name('DoctorRecord');
     Route::get('/doctor/edit/{DoctorId}', [AddDoctorController::class, 'edit'])->name('DoctorEdit');
     Route::put('/doctor/update/{DoctorId}', [AddDoctorController::class, 'update'])->name('DoctorUpdate');
     Route::delete('/doctor/{id}', [AddDoctorController::class, 'destroy'])->name('DeleteDoctor');
@@ -117,7 +118,6 @@ Route::middleware(['auth', 'role:user'])->group(function () {
 
     Route::get('/Doctors', [AddDoctorController::class, 'DoctorView'])->name('user.Doctors'); 
   
-    Route::get('/DoctorList', [AddDoctorController::class, 'list'])->name('DoctorList');
 
     Route::get('/History', [BookingController::class, 'history'])->name('user.history');
     Route::delete('/booking/cancel/{id}', [BookingController::class, 'cancel'])->name('booking.cancel');

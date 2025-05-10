@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\AddDoctor;
 use App\Models\DoctorAvailability;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -30,7 +29,7 @@ class AddDoctorController extends Controller
             'bio' => 'nullable|string',
         ]);
 
-        $doctorData = $request->only([
+        $doctorData = $request->only([ 
             'firstname', 'lastname', 'age', 'gender', 'contact', 'email',
             'marital', 'street', 'city', 'country', 'postal',
             'specialization', 'qualification', 'bio'
@@ -46,42 +45,37 @@ class AddDoctorController extends Controller
         return redirect()->route('DoctorList')->with('success', 'Doctor added successfully!');
     }
 
-    public function searchDoctors(Request $request)
+    public function show()
     {
-        $searchTerm = $request->input('search');
-        $query = AddDoctor::query();
+        $DoctorRecord = AddDoctor::all(); 
+        return view('doctor_record', compact('DoctorRecord')); 
+    }
 
-        if ($searchTerm) {
-            $query->where('firstname', 'LIKE', "%{$searchTerm}%")
-                  ->orWhere('lastname', 'LIKE', "%{$searchTerm}%")
-                  ->orWhere('email', 'LIKE', "%{$searchTerm}%");
-        }
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
 
-        return $query;
+        $Doctorlist = AddDoctor::when($search, function ($query, $search) {
+            return $query->where('firstname', 'like', "%$search%")
+                         ->orWhere('lastname', 'like', "%$search%")
+                         ->orWhere('email', 'like', "%$search%");
+        })->with('availabilities')->paginate(10);
+
+        $Doctorlist->appends(['search' => $search]); 
+
+        return view('doctor_list', compact('Doctorlist'));
+    }
+
+    public function paginate(Request $request)
+    {
+        $Doctorlist = AddDoctor::with('availabilities')->paginate(10);
+
+        return view('doctor_list', compact('Doctorlist'));
     }
 
     public function list(Request $request)
     {
-        // Perform your search query
-        $query = $this->searchDoctors($request);
-
-        // Eager load the availabilities
-        $Doctorlist = $query->with('availabilities')->paginate(4);
-
-        // Get the current day and time
-        $currentDay = Carbon::now()->format('l');       // e.g., 'Monday'
-        $currentTime = Carbon::now()->format('H:i:s');  // e.g., '08:00:00'
-
-        // Pass everything to the view
-        return view('doctor_list', compact('Doctorlist', 'currentDay', 'currentTime'));
-    }
-
-    public function paginateDoctors(Request $request)
-    {
-        $query = $this->searchDoctors($request);
-        $DoctorRecord = $query->paginate(2);
-
-        return view('doctor_record', compact('DoctorRecord'));
+        return $this->search($request);
     }
 
     public function edit($DoctorId)
@@ -168,6 +162,4 @@ public function update(Request $request, $DoctorId)
         return view('user.Doctors', compact('Doctorlist'));  
     }
     
-
-
 }
