@@ -100,6 +100,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 Route::post('/AddPatient',[PatientController::class, 'store'])->name('StoredPatient');
 Route::get('/notifications/read/{id}', [NotificationController::class, 'markAsRead'])->name('notifications.read');
+Route::post('/notifications/mark-all-as-read', [NotificationController::class, 'markAllAsRead'])->name('notifications.markAllAsRead');
 
 
 

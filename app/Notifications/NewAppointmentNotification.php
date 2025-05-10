@@ -1,11 +1,4 @@
 <?php
-
-namespace App\Notifications;
-
-use App\Models\Booking;
-use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Notification;
-
 namespace App\Notifications;
 
 use App\Models\Booking;

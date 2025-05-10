@@ -15,28 +15,6 @@
                 <h1 class="fw-bold">Welcome, Clinic Administrator</h1>
                 <p class="text-muted">Efficiently manage doctors, appointments, and patients in one place.</p>
             </div>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle position-relative" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    🔔
-                    @if($notifications->count() > 0)
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                            {{ $notifications->count() }}
-                        </span>
-                    @endif
-                </a>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown" style="width: 300px;">
-                    @forelse($notifications as $notification)
-                        <li>
-                            <a class="dropdown-item text-wrap" href="{{ route('notifications.read', $notification->id) }}">
-                                {{ $notification->data['message'] ?? 'New Notification' }}
-                                <br><small class="text-muted">{{ $notification->created_at->diffForHumans() }}</small>
-                            </a>
-                        </li>
-                    @empty
-                        <li><span class="dropdown-item text-muted">No new notifications</span></li>
-                    @endforelse
-                </ul>
-            </li>
         </div>
     </div>
     <div class="row mt-4">
@@ -67,23 +45,13 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="row">
-                <div class="col">
-                    <div class="border border-0 shadow-sm text-center p-4 bg-white ">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-      <!-- Monthly Appointments Chart Section -->
+                  <!-- Monthly Appointments Chart Section -->
       <div class="row mt-3">
-        <div class="col-md-8">
+        <div class="col">
             <div class="border border-0 shadow-sm text-center p-4 bg-white">
                 <div class="row mt-3 py-2 align-items-center">
                     <div class="col-md-3">
-                        <input type="month" class="form-control" id="searchInput" value="{{ date('Y-m') }}">
+                        <input type="month" class="form-control" id="searchInput" value="{{ date('Y-m') }}" onchange="updateChart()">
                     </div>
                     <div class="col-md-9 d-flex justify-content-end">
                         <i class="fas fa-chart-line fa-2x"></i>
@@ -95,6 +63,51 @@
                 </div>
             </div>
         </div>
+    </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm p-0 bg-white h-100 rounded-4 overflow-hidden">
+                <div class="text-white px-4 py-3 d-flex justify-content-between align-items-center" style="background-color: #0e2238">
+                    <h5 class="fw-bold mb-0">
+                        <i class="fas fa-bell me-2"></i> Notifications
+                    </h5>
+                    @if($notifications->count() > 0)
+                        <form method="POST" action="{{ route('notifications.markAllAsRead') }}">
+                            @csrf
+                            <button type="submit" class="btn btn-sm btn-light text-black fw-bold">
+                                Mark All
+                            </button>
+                        </form>
+                    @endif
+                </div>
+        
+                <div class="p-3" style="max-height: 500px; overflow-y: auto;">
+                    @if($notifications->count() > 0)
+                        @foreach($notifications as $notification)
+                            <div class="card border-0 shadow-sm mb-3 notification-card 
+                                {{ is_null($notification->read_at) ? 'bg-light border-start border-4 border-danger' : 'bg-white border-start border-4 border-secondary' }}">
+                                <div class="card-body p-3 d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <div class="fw-semibold text-dark mb-1">
+                                            <i class="fas fa-info-circle me-1 text-{{ is_null($notification->read_at) ? 'danger' : 'secondary' }}"></i>
+                                            {{ $notification->data['message'] ?? 'New Notification' }}
+                                        </div>
+                                        <small class="text-muted">{{ $notification->created_at->diffForHumans() }}</small>
+                                    </div>
+                                    <a href="{{ route('notifications.read', $notification->id) }}" class="btn btn-sm btn-outline-primary ms-2">Mark as Read</a>
+                                </div>
+                            </div>
+                        @endforeach
+                    @else
+                        <div class="text-center text-muted py-5">
+                            <i class="fas fa-inbox fa-3x mb-3 text-danger"></i>
+                            <p class="mb-0 fs-6">No New Appointments</p>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+        
     </div>
 </div>
 
@@ -147,6 +160,11 @@
                     }
                 });
             });
+    }
+
+    function updateChart() {
+        const [year] = document.getElementById('searchInput').value.split('-');
+        renderAppointmentsChart(year);
     }
     
     // Initial chart render on page load

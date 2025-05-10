@@ -23,4 +23,14 @@ class NotificationController extends Controller
             return redirect()->route('user.history');
         }
     }
+
+    public function markAllAsRead()
+    {
+        $user = Auth::user();
+        $user->unreadNotifications->markAsRead();
+
+        return redirect()->route('appointmentlist')->with('success', 'All notifications marked as read.');
+    }
 }
+
+
