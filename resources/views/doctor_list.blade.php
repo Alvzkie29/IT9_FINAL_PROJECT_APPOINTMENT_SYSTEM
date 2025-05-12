@@ -54,29 +54,31 @@
                                     <span class="text-dark ms-2">{{ $Doctor->firstname }} {{ $Doctor->lastname }}</span>
                                 </div>
                             </div>
-                            <hr class="my-3">
-                            <div class="row p-3">
+                            <hr class="my-2">
+                            <div class="row md-3 py-3">
                                 <div class="d-flex justify-content-center flex-wrap">
                                     @php
-                                        $currentDay = \Carbon\Carbon::now()->format('l');
-                                        $currentTime = \Carbon\Carbon::now()->format('H:i');
+                                        $currentDay = \Carbon\Carbon::now()->format('l'); // Full day name like 'Monday'
                                     @endphp
+
                                     @foreach(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as $day)
                                         @php
-                                            $availability = $Doctor->availabilities->firstWhere('day', $day) ?? null;
-                                            $isAvailable = $availability && $availability->status == 1 &&
-                                                           \Carbon\Carbon::parse($availability->start_time)->lte($currentTime) &&
-                                                           \Carbon\Carbon::parse($availability->end_time)->gte($currentTime);
+                                            $availability = $Doctor->availabilities->firstWhere('day', $day);
+                                            $isAvailable = $availability && $availability->status == 1;
+                                            $isToday = $currentDay === $day;
                                         @endphp
-                                        <div class="border mx-1 my-1 d-flex align-items-center justify-content-center" 
-                                             style="width: 40px; height: 40px; border-radius: 50%; 
-                                                 background-color: {{ $isAvailable ? '#28a745' : '#e9ecef' }}; 
-                                                 color: {{ $isAvailable ? '#fff' : '#6c757d' }}; 
-                                                 font-weight: bold;">
-                                            {{ substr($day, 0, 1) }}
+
+                                        <div class="mx-1 my-1 d-flex align-items-center justify-content-center"
+                                            style="width: 50px; height: 50px; border-radius: 50%;
+                                                    background-color: {{ $isAvailable ? '#28a745' : '#e9ecef' }};
+                                                    color: {{ $isAvailable ? '#fff' : '#6c757d' }};
+                                                    font-weight: bold;
+                                                    border: 3px solid {{ $isToday ? '#007bff' : 'transparent' }};">
+                                            {{ substr($day, 0, 3) }}
                                         </div>
                                     @endforeach
                                 </div>
+
                             </div>
                         </div>
                     </div>

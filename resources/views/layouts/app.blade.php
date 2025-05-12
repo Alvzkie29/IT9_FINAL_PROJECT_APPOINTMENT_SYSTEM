@@ -189,7 +189,7 @@
     <div class="wrapper">
         <aside id="sidebar">
             <div class="d-flex">
-                <button id="toggle-btn" type="button" class="toggle-btn">
+                <button id="toggle-btn" type="button" class="toggle-btn" onclick="toggleSidebar()">
                     <i class="ri-layout-grid-fill"></i>
                 </button>
                 <div class="sidebar-logo">
@@ -325,32 +325,22 @@
 
 <script>
     @yield('scripts')
-    if (typeof toggleSidebar === 'undefined') {
-        function toggleSidebar() {
-            const toggleBtn = document.getElementById('toggle-btn');
-            const sidebar = document.getElementById('sidebar');
-            
-            if (toggleBtn && sidebar) {
-                toggleBtn.addEventListener('click', () => {
-                    sidebar.classList.toggle('expand');
-                });
-            }
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        if (sidebar) {
+            sidebar.classList.toggle('expand');
         }
     }
 
-    // Initial binding
-    toggleSidebar();
-
     // Rebind after HTMX updates
     document.body.addEventListener('htmx:afterSwap', () => {
-        toggleSidebar();
-        // Reinitialize other components if needed
         document.addEventListener("htmx:beforeRequest", function() {
-                document.getElementById("reload-bar").style.display = "block";
-            });
+            document.getElementById("reload-bar").style.display = "block";
+        });
 
-            document.addEventListener("htmx:afterRequest", function() {
-                document.getElementById("reload-bar").style.display = "none";
+        document.addEventListener("htmx:afterRequest", function() {
+            document.getElementById("reload-bar").style.display = "none";
+        });
     });
 </script>
 </html>

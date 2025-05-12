@@ -25,7 +25,7 @@
                 <tbody>
                     @foreach($bookings as $booking)
                     <tr>
-                        <td>{{ $booking->patient->user->name ?? 'N/A' }}</td>
+                        <td>{{ $booking->patient->user->firstname ?? 'N/A' }}&nbsp;{{ $booking->patient->user->lastname ?? 'N/A' }}</td>
                         <td>{{ $booking->doctor->firstname }} {{ $booking->doctor->lastname }}</td>
                         <td>{{ \Carbon\Carbon::parse($booking->date)->format('M d, Y') }}</td>
                         <td>{{ \Carbon\Carbon::parse($booking->time)->format('h:i A') }}</td>

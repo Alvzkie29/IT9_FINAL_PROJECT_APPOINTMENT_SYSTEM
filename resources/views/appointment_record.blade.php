@@ -38,7 +38,7 @@
                 <tbody>
                     @foreach($records as $record)
                     <tr>
-                        <td>{{ $record->booking->patient->user->name ?? 'N/A' }}</td>
+                        <td>{{ $record->booking->patient->user->firstname ?? 'N/A' }} &nbsp;{{ $record->booking->patient->user->lastname ?? 'N/A' }}</td>
                         <td>{{ $record->booking->doctor->firstname }} {{ $record->booking->doctor->lastname }}</td>
                         <td>{{ \Carbon\Carbon::parse($record->booking->date)->format('d-m-Y') }}</td>
                         <td>{{ \Carbon\Carbon::parse($record->booking->time)->format('h:i A') }}</td>

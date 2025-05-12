@@ -51,8 +51,9 @@
         
                             <div class="form-group">
                                 <label for="day">Select Day</label>
-                                <select name="day" id="day" class="w-full p-2 border rounded form-control" required>
-                                    <option value="" hidden selected>Select Day</option>
+                                <select name="day" id="day" class="w-full p-2 border rounded form-control">
+                                    <option hidden>Select Day</option>
+                                  
                                     @foreach(['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'] as $day)
                                         <option value="{{ $day }}">{{ ucfirst($day) }}</option>
                                     @endforeach

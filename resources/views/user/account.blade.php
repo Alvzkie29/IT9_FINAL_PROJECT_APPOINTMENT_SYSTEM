@@ -21,28 +21,20 @@
                 @if(session('success'))
                     <div class="alert alert-success">{{ session('success') }}</div>
                 @endif
-                @if (session('error'))
-                    <div class="alert alert-danger">{{ session('error') }}</div>
-                @endif
-                @if (session('patient_exists'))
-                    <div class="alert alert-warning">{{ session('patient_exists') }}</div>
+                @if ($patient ?? false)
+                    <div class="alert alert-info">Patient information already exists. You can update it if needed.</div>
                 @endif
                 <form action="{{ route('StoredPatient') }}" method="POST">
                     @csrf
                     <div class="row">
                         <div class="col-md-6 mt-3">
                             <label for="firstname">First Name</label>
-                            <input type="text" class="form-control" id="firstname" name="firstname">
-                            @if ($errors->has('firstname'))
-                                <span class="text-danger">{{ $errors->first('firstname') }}</span>
-                            @endif
+                            <input type="text" class="form-control" id="firstname" name="firstname" value="{{ Auth::user()->firstname }}" readonly>
+                         
                         </div>
                         <div class="col-md-6 mt-3">
                             <label for="lastname">Last Name</label>
-                            <input type="text" class="form-control" id="lastname" name="lastname" >
-                            @if ($errors->has('lastname'))
-                                <span class="text-danger">{{ $errors->first('lastname') }}</span>
-                            @endif
+                            <input type="text" class="form-control" id="lastname" name="lastname" value="{{ Auth::user()->lastname }}" readonly >
                         </div>
                         <div class="col-md-4 mt-3">
                             <label for="age">Age</label>
