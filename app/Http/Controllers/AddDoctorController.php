@@ -78,7 +78,7 @@ class AddDoctorController extends Controller
         return $this->search($request);
     }
 
-    public function edit($DoctorId)
+    public function edit($DoctorId) 
     {
         
         $doctor = AddDoctor::find($DoctorId);
