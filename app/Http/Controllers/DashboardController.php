@@ -5,6 +5,7 @@ use App\Models\AddDoctor;
 use App\Models\Booking;
 use App\Models\Patient;
 use Illuminate\Support\Facades\DB;
+use App\Models\UserReviews;
 
 class DashboardController extends Controller
 {
@@ -42,5 +43,9 @@ class DashboardController extends Controller
         return response()->json($completeData);
     }
     
+    public function userDashboard(){
+         $userReviews = UserReviews::with('user')->latest()->paginate(2);
+        return view('user.dashboard', compact('userReviews'));
+    }
     
 }

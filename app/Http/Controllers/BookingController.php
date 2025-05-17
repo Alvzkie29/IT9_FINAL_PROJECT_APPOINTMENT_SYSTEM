@@ -68,7 +68,7 @@ class BookingController extends Controller
             return redirect()->back()->with('error', 'Sorry, the selected time slot is already reserved. Please choose another time.');
         }
     
-        // ✅ No conflicting booking found, safe to create
+        // create a new booking if it doesn't conflict
         $booking = Booking::create([
             'patient_id' => $patient->id,
             'doctor_id' => $request->doctor_id,
@@ -91,7 +91,7 @@ class BookingController extends Controller
         })
         ->with('doctor', 'patient.user')
         ->orderBy('created_at', 'desc')
-        ->paginate(10); // Add pagination
+        ->paginate(10); 
     
         return view('user.history', compact('bookings'));
     }

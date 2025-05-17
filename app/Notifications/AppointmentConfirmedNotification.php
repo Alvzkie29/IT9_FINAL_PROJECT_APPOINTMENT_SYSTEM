@@ -20,7 +20,7 @@ class AppointmentConfirmedNotification extends Notification
 
     public function via($notifiable)
     {
-        return ['mail', 'database']; // ← now sends email + in-app
+        return ['mail', 'database']; 
     }
 
     public function toMail($notifiable)

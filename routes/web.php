@@ -13,10 +13,10 @@ use App\Http\Controllers\DoctorAvailabilityController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\AuthenticatedSessionController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UserReviewsController;
 
-Route::get('/', function () {
-    return redirect()->route('login'); // Redirect to login page by default
-});
+Route::get('/', [DashboardController::class, 'userDashboard']);
+
 
 Route::get('/redirect', function () {
     $user = Auth::user();
@@ -110,12 +110,9 @@ Route::post('/AddPatient',[PatientController::class, 'store'])->name('StoredPati
 Route::get('/notifications/read/{id}', [NotificationController::class, 'markAsRead'])->name('notifications.read');
 Route::post('/notifications/mark-all-as-read', [NotificationController::class, 'markAllAsRead'])->name('notifications.markAllAsRead');
 
-
+Route::get('/user/dashboard', [DashboardController::class, 'userDashboard'])->name('user.dashboard');
 
 Route::middleware(['auth', 'role:user'])->group(function () {
-    Route::get('/user/dashboard', function () {
-        return view('user.dashboard'); 
-    })->name('user.dashboard');
 
     Route::get('/About', function () {
         return view('user.About'); 
@@ -141,6 +138,11 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     })->name('AccountDetails');
 
     Route::get('PatientInfo', [PatientController::class, 'fetchPatientInfo'])->name('PatientInfo'); 
+
+    //User Reviews
+    Route::get('/user-reviews', [UserReviewsController::class, 'index'])->name('user-reviews.index');
+    Route::get('/user-reviews/create', [UserReviewsController::class, 'create'])->name('user-reviews.create');
+    Route::post('/user-reviews', [UserReviewsController::class, 'store'])->name('user-reviews.store');
 });
 
 Route::get('/monthly-appointments', [DashboardController::class, 'getMonthlyAppointments'])->name('monthly.appointments');

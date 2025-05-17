@@ -48,23 +48,21 @@
     <div class="container">
         <h2 class="text-center fw-bold mb-5" data-aos="fade-up">What Our Patients Say</h2>
         <div class="row g-4">
-
-            <div class="col-md-6" data-aos="fade-right">
-                <div class="bg-white p-4 rounded shadow-sm h-100">
-                    <p class="mb-3 fst-italic">"Very professional staff and clean facilities. I feel well cared for every visit."</p>
-                    <small class="text-muted">— Maria L., Patient</small>
+            @forelse ($userReviews as $review)
+                <div class="col-md-6" data-aos="fade-up">
+                    <div class="bg-white p-4 rounded shadow-sm h-100 d-flex flex-column">
+                        <p class="mb-3 fst-italic flex-grow-1">"{{ $review->review }}"</p>
+                        <small class="text-muted">— {{ $review->user->firstname }} {{ $review->user->lastname }}, Patient</small>
+                    </div>
                 </div>
-            </div>
-
-            <div class="col-md-6" data-aos="fade-left">
-                <div class="bg-white p-4 rounded shadow-sm h-100">
-                    <p class="mb-3 fst-italic">"Booking was fast and easy. The doctor explained everything clearly."</p>
-                    <small class="text-muted">— John D., Patient</small>
+            @empty
+                <div class="col-12 text-center">
+                    <p class="fst-italic">No reviews yet. Be the first to leave one!</p>
                 </div>
-            </div>
-
+            @endforelse
         </div>
     </div>
+
 </section>
 
 <footer class="text-white pt-5 pb-4" style="background: linear-gradient(135deg, #0d6efd, #00bcd4);">

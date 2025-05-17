@@ -11,7 +11,9 @@ class AddDoctor extends Model
 
     protected $table = 'add_doctors';
     protected $primaryKey = 'DoctorId';
-    public $incrementing = false;
+    public $incrementing = true;
+    protected $keyType = 'int';
+
     protected $fillable = [
         'image_path',
         'bio',
