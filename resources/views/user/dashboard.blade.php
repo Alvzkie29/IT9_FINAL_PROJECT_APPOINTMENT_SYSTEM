@@ -44,6 +44,7 @@
     </div>
 </section>
 
+<!-- Reviews Section -->
 <section class="bg-light py-5">
     <div class="container">
         <h2 class="text-center fw-bold mb-5" data-aos="fade-up">What Our Patients Say</h2>
@@ -52,7 +53,15 @@
                 <div class="col-md-6" data-aos="fade-up">
                     <div class="bg-white p-4 rounded shadow-sm h-100 d-flex flex-column">
                         <p class="mb-3 fst-italic flex-grow-1">"{{ $review->review }}"</p>
-                        <small class="text-muted">— {{ $review->user->firstname }} {{ $review->user->lastname }}, Patient</small>
+                        <small class="text-muted">
+                            — 
+                            @if ($review->user)
+                                {{ $review->user->firstname }} {{ $review->user->lastname }}
+                            @else
+                                Unknown User
+                            @endif
+                            , Patient
+                        </small>
                     </div>
                 </div>
             @empty
@@ -62,45 +71,49 @@
             @endforelse
         </div>
     </div>
-
 </section>
 
-<footer class="text-white pt-5 pb-4" style="background: linear-gradient(135deg, #0d6efd, #00bcd4);">
+<!-- Footer -->
+<footer class="text-white pt-4 pb-3" style="background: linear-gradient(135deg, #0d6efd, #00bcd4); font-size: 1rem;">
     <div class="container">
         <div class="row">
             <div class="col-md-4 mb-4">
-                <h5 class="fw-bold">Medicare Clinic</h5>
-                <p class="small">Trusted care for every stage of life. Your health is our priority.</p>
+                <h4 class="fw-bold mb-3">Medicare Clinic</h4>
+                <p class="mt-1">Trusted care for every stage of life.<br>Your health is our priority.</p>
+                <p class="mt-1">Where compassion meets advanced care,<br> creating a truly personal experience for you.</p>
+                <p class="mt-1">We believe in a holistic approach, <br> caring for your physical and emotional needs.</p>
             </div>
+
             <div class="col-md-4 mb-4">
-                <h6 class="fw-semibold">Quick Links</h6>
-                <ul class="list-unstyled">
-                    <li><a href="" class="text-white text-decoration-none">Home</a></li>
-                    <li><a href="" class="text-white text-decoration-none">About Us</a></li>
-                    <li><a href="{{ route('user.booking') }}" class="text-white text-decoration-none">Book Appointment</a></li>
-                    <li><a href="#" class="text-white text-decoration-none">Contact</a></li>
+                <h5 class="fw-semibold mb-3">Quick Links</h5>
+                <ul class="list-unstyled fs-6">
+                    <li class="mb-2"><a href="{{ route('user.dashboard') }}" class="text-white text-decoration-none">🏠 Home</a></li>
+                    <li class="mb-2"><a href="{{ route('user.About') }}" class="text-white text-decoration-none">ℹ️ About Us</a></li>
+                    <li><a href="{{ route('user.booking') }}" class="text-white text-decoration-none">📅 Book Appointment</a></li>
                 </ul>
             </div>
+
             <div class="col-md-4">
-                <h6 class="fw-semibold">Get in Touch</h6>
-                <p class="small mb-1"><i class="ri-map-pin-line me-2"></i>123 Health St., Wellness City</p>
-                <p class="small mb-1"><i class="ri-phone-line me-2"></i>(+63) 900-123-4567</p>
-                <p class="small mb-3"><i class="ri-mail-line me-2"></i>contact@medicareclinic.com</p>
+                <h5 class="fw-semibold mb-3">Get in Touch</h5>
+                <p class="mb-2"><i class="ri-map-pin-line me-2"></i>123 Health St., Wellness City</p>
+                <p class="mb-2"><i class="ri-phone-line me-2"></i>(+63) 900-123-4567</p>
+                <p class="mb-3"><i class="ri-mail-line me-2"></i>contact@medicareclinic.com</p>
                 <div>
-                    <a href="#" class="text-white fs-5 me-3"><i class="ri-facebook-circle-fill"></i></a>
-                    <a href="#" class="text-white fs-5 me-3"><i class="ri-twitter-x-line"></i></a>
-                    <a href="#" class="text-white fs-5 me-3"><i class="ri-instagram-line"></i></a>
-                    <a href="#" class="text-white fs-5"><i class="ri-youtube-fill"></i></a>
+                    <a href="#" class="text-white fs-4 me-3"><i class="ri-facebook-circle-fill"></i></a>
+                    <a href="#" class="text-white fs-4 me-3"><i class="ri-twitter-x-line"></i></a>
+                    <a href="#" class="text-white fs-4 me-3"><i class="ri-instagram-line"></i></a>
+                    <a href="#" class="text-white fs-4"><i class="ri-youtube-fill"></i></a>
                 </div>
             </div>
         </div>
 
         <hr class="border-white mt-4">
 
-        <div class="text-center small">
+        <div class="text-center fs-6">
             © {{ date('Y') }} Medicare Clinic. All rights reserved.
         </div>
     </div>
 </footer>
+
 
 @endsection

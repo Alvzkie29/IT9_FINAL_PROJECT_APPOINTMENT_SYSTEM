@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 class UserReviewsController extends Controller
 {
     public function index() {
-        $userReviews = UserReviews:: with('user')->paginate(10);
+        $userReviews = UserReviews:: with('user')->paginate(9);
         return view('user.user_reviews', compact('userReviews'));
     }
 
