@@ -47,7 +47,13 @@
 <!-- Reviews Section -->
 <section class="bg-light py-5">
     <div class="container">
-        <h2 class="text-center fw-bold mb-5" data-aos="fade-up">What Our Patients Say</h2>
+        <div class="text-center mb-5">
+            <h2 class="fw-bold mb-3" data-aos="fade-up">What Our Patients Say</h2>
+            <a href="{{ route('user-reviews.create') }}" class="btn btn-primary">
+                <i class="fas fa-plus-circle me-1"></i> Add Your Review
+            </a>
+        </div>
+    </div>
         <div class="row g-4">
             @forelse ($userReviews as $review)
                 <div class="col-md-6" data-aos="fade-up">
@@ -80,14 +86,15 @@
             <div class="col-md-4 mb-4">
                 <h4 class="fw-bold mb-3">Medicare Clinic</h4>
                 <p class="mt-1">Trusted care for every stage of life.<br>Your health is our priority.</p>
-                <p class="mt-1">Where compassion meets advanced care,<br> creating a truly personal experience for you.</p>            </div>
+                <p class="mt-1">Where compassion meets advanced care,<br> creating a truly personal experience for you.</p>            
+            </div>
 
             <div class="col-md-4 mb-4">
                 <h5 class="fw-semibold mb-3">Quick Links</h5>
                 <ul class="list-unstyled fs-6">
-                    <li class="mb-2"><a href="{{ route('user.dashboard') }}" class="text-white text-decoration-none">🏠 Home</a></li>
-                    <li class="mb-2"><a href="{{ route('user.About') }}" class="text-white text-decoration-none">ℹ️ About Us</a></li>
-                    <li><a href="{{ route('user.booking') }}" class="text-white text-decoration-none">📅 Book Appointment</a></li>
+                    <li class="mb-2"><a href="{{ route('user.dashboard') }}" class="text-white text-decoration-none"> Home</a></li>
+                    <li class="mb-2"><a href="{{ route('user.About') }}" class="text-white text-decoration-none">About Us</a></li>
+                    <li><a href="{{ route('user.booking') }}" class="text-white text-decoration-none">Book Appointment</a></li>
                 </ul>
             </div>
 
