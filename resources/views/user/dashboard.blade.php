@@ -3,8 +3,8 @@
 @section('content')
 
 <!-- Hero Section with Overlay -->
-<section class="hero-section position-relative d-flex align-items-center text-white text-center" style="background: url('{{ asset('images/clinics.jpg') }}') center/cover no-repeat; height: 85vh;">
-    <div class="position-absolute top-0 start-0 w-100 h-100" style="background: rgba(0, 0, 0, 0.6);"></div>
+<section class="hero-section position-relative d-flex align-items-center text-white text-center" style="background: url('{{ asset('images/clinicheader.png') }}') center/cover no-repeat; height: 50vh;">
+    <div class="position-absolute top-0 start-0 w-50 h-5" style="background: rgba(0, 0, 0, 0.6);"></div>
     <div class="container position-relative z-1">
         <h1 class="display-2 fw-bold mb-3" data-aos="fade-down">Expert Health Consultations</h1>
         <p class="lead mb-4" data-aos="fade-up">Top-rated doctors providing trusted, patient-first medical care.</p>
@@ -80,9 +80,7 @@
             <div class="col-md-4 mb-4">
                 <h4 class="fw-bold mb-3">Medicare Clinic</h4>
                 <p class="mt-1">Trusted care for every stage of life.<br>Your health is our priority.</p>
-                <p class="mt-1">Where compassion meets advanced care,<br> creating a truly personal experience for you.</p>
-                <p class="mt-1">We believe in a holistic approach, <br> caring for your physical and emotional needs.</p>
-            </div>
+                <p class="mt-1">Where compassion meets advanced care,<br> creating a truly personal experience for you.</p>            </div>
 
             <div class="col-md-4 mb-4">
                 <h5 class="fw-semibold mb-3">Quick Links</h5>
@@ -98,16 +96,10 @@
                 <p class="mb-2"><i class="ri-map-pin-line me-2"></i>123 Health St., Wellness City</p>
                 <p class="mb-2"><i class="ri-phone-line me-2"></i>(+63) 900-123-4567</p>
                 <p class="mb-3"><i class="ri-mail-line me-2"></i>contact@medicareclinic.com</p>
-                <div>
-                    <a href="#" class="text-white fs-4 me-3"><i class="ri-facebook-circle-fill"></i></a>
-                    <a href="#" class="text-white fs-4 me-3"><i class="ri-twitter-x-line"></i></a>
-                    <a href="#" class="text-white fs-4 me-3"><i class="ri-instagram-line"></i></a>
-                    <a href="#" class="text-white fs-4"><i class="ri-youtube-fill"></i></a>
-                </div>
             </div>
         </div>
 
-        <hr class="border-white mt-4">
+        <hr class="border-white mt-2">
 
         <div class="text-center fs-6">
             © {{ date('Y') }} Medicare Clinic. All rights reserved.

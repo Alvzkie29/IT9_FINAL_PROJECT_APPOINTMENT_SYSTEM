@@ -54,6 +54,7 @@
                     ['title' => 'Chronic Illness Management', 'desc' => 'Support for diabetes, hypertension, and more.'],
                     ['title' => 'Laboratory Work', 'desc' => 'On-site testing with fast results.'],
                     ['title' => 'Vaccinations & Immunizations', 'desc' => 'Protection for you and your family.'],
+                    ['title' => 'Minor Procedures', 'desc' => 'Quick, in-office treatments.'],
                 ];
             @endphp
 
